@@ -1,4 +1,4 @@
 
 export interface IXyoChainTracer {
-  traceChain(publicKey: Buffer, limit: number, offsetHash: Buffer | undefined, up: boolean): Promise<Buffer[]>
+  traceChain(publicKey: Buffer, limit: number | undefined, index: number | undefined, up: boolean): Promise<Buffer[]>
 }
