@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-diviner-nodejs",
-  "version": "0.2.66",
+  "version": "0.2.67",
   "description": "XYO Diviner SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,9 +29,11 @@
   },
   "xyoPlugins": [
     "dist/chain/plugin/index.js",
-    "dist/query/plugin/index.js"
+    "dist/query/plugin/index.js",
+    "dist/payment/plugin/index.js"
   ],
   "devDependencies": {
+    "@types/bs58": "^4.0.0",
     "@types/ethereumjs-abi": "^0.6.3",
     "@types/ethereumjs-tx": "^1.0.1",
     "@types/graphql": "^14.2.0",
@@ -43,6 +45,7 @@
     "@types/lru-cache": "^5.1.0",
     "@types/mysql": "^2.15.5",
     "@types/node": "^11.13.7",
+    "@types/web3": "^1.0.18",
     "@types/yargs": "^13.0.0",
     "@xyo-network/config-tslint": "^0.1.12",
     "copyfiles": "^2.1.0",
@@ -52,7 +55,6 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "@types/bs58": "^4.0.0",
     "@xyo-network/object-model": "^0.5.10",
     "@xyo-network/sdk-base-nodejs": "^0.3.10",
     "@xyo-network/sdk-core-nodejs": "0.64.3-beta.2",
@@ -71,6 +73,7 @@
     "levelup": "^4.0.1",
     "lodash": "^4.17.11",
     "lru-cache": "^5.1.1",
+    "web3": "^1.0.0-beta.55",
     "yargs": "^13.2.2"
   }
 }
