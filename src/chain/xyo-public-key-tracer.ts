@@ -31,6 +31,10 @@ export class XyoPublicKeyTracer implements IXyoChainTracer {
 
       blocks = blocks.concat(segmentBlocks.items)
 
+      if (blocks.length === 0) {
+        break
+      }
+
       if (blocks.length !== limit && blocks.length > 0) {
         // if we are still not done
 
@@ -46,6 +50,7 @@ export class XyoPublicKeyTracer implements IXyoChainTracer {
         }
 
         if (!up) {
+          console.log('here')
           const hash = new XyoBoundWitness(blocks[blocks.length - 1]).getHash(new XyoSha256()).getAll().getContentsCopy()
           const blockBelow = await this.hashTracer.getBlocksDown(hash, 1, publicKeyCursor)
 
