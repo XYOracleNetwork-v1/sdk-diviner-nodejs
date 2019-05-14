@@ -1,7 +1,7 @@
 {
   "name": "@xyo-network/sdk-diviner-nodejs",
   "version": "0.2.66",
-  "description": "XYO Archivist SDK",
+  "description": "XYO Diviner SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -28,8 +28,8 @@
     "license": "yarn license-checker --onlyAllow 'MIT;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0;ISC;Unlicense;UNKNOWN;BSD*;CC0-1.0' --excludePackages 'colors@0.6.2'"
   },
   "xyoPlugins": [
-    "dist/chain/plugin",
-    "dist/query/plugin"
+    "dist/chain/plugin/index.js",
+    "dist/query/plugin/index.js"
   ],
   "devDependencies": {
     "@types/ethereumjs-abi": "^0.6.3",
