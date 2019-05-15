@@ -27,11 +27,18 @@ export interface IXyoMutatorCreater {
   create: (config: any, creators: Map<string, IXyoMutatorCreater>) => IXyoMutator
 }
 
+export interface IXyoAuth {
+  name: string,
+  auth (config: any): Promise<boolean>
+  didComplete (config: any): Promise<void>
+}
+
 export interface IXyoMutator {
   mutate (from: Buffer[]): Promise<any>
 }
 
 export interface IXyoQuery {
+  payment?: IXyoConfig,
   select: IXyoConfig,
   filter?: IXyoConfig,
   mutate?: IXyoConfig

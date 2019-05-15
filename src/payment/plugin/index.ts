@@ -4,6 +4,8 @@ import { XyoEthPaymentValidator } from '../eth/xyo-eth-payment'
 import { XyoCreditEndpoint } from './endpoints/xyo-check-credits-endpoint'
 import { XyoSpendEndpoint } from './endpoints/xyo-is-spent-endpoint'
 import { XyoEthRedeemEndpoint } from './endpoints/xyo-eth-redeem-credits'
+import { XyoChainScan } from '../../query/xyo-chain-scan'
+import { XyoQueryAuth } from '../../query/auth/xyo-query-auth'
 
 class EthPaymentPlugin implements IXyoPlugin {
 
@@ -16,14 +18,18 @@ class EthPaymentPlugin implements IXyoPlugin {
   }
 
   public getPluginDependencies(): string[] {
-    return []
+    return [
+      'CHAIN_SCAN'
+    ]
   }
 
   public async initialize(deps: { [key: string]: any; }, config: any, graphql?: IXyoGraphQlDelegate | undefined): Promise<boolean> {
     const store = new DynamoSpendRepository()
     const creditEndpoint = new XyoCreditEndpoint(store)
     const spendEndpoint = new XyoSpendEndpoint(store)
+    const scan = deps.CHAIN_SCAN as XyoChainScan
     const ethEndpoint = new XyoEthRedeemEndpoint(new XyoEthPaymentValidator('https://mainnet.infura.io/v3/79ea25bb01d34467a8179dbe940d5b68', store))
+    scan.auth = new XyoQueryAuth(store)
 
     await store.initialize()
 
