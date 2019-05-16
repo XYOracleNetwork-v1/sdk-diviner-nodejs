@@ -1,5 +1,6 @@
 import Web3 from 'web3'
 import { IXyoPaymentStore } from '..'
+import ethSigUtil from 'eth-sig-util'
 
 const erc2Contract = '0x55296f69f40ea6d20e478533c15a6b08b654e758'
 
@@ -13,7 +14,17 @@ export class XyoEthPaymentValidator {
   }
 
   public async redeem (txHash: string, from: string, to: string, signature: string, privateApiKey: string, erc20ToCreditRatio: number): Promise<boolean> {
-    if (this.web3.eth.accounts.recover(privateApiKey, signature).toLowerCase() === from.toLowerCase()) {
+
+    const expectedAddress = (ethSigUtil as any).recoverTypedSignature({
+      data: [{
+        type: 'string',      // Any valid solidity type
+        name: 'Message',     // Any string label you want
+        value: privateApiKey
+      }],
+      sig: signature
+    })
+
+    if (expectedAddress.toLowerCase() === from.toLowerCase()) {
       const numberOfErc20 = await this.getAmountInTransaction(txHash, from, to)
 
       if (numberOfErc20 && !(await this.paymentStore.didSpend(txHash))) {

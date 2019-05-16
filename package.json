@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-diviner-nodejs",
-  "version": "0.2.68",
+  "version": "0.2.69",
   "description": "XYO Diviner SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -57,7 +57,7 @@
   "dependencies": {
     "@xyo-network/object-model": "^0.5.10",
     "@xyo-network/sdk-base-nodejs": "^0.3.10",
-    "@xyo-network/sdk-core-nodejs": "0.64.3-beta.2",
+    "@xyo-network/sdk-core-nodejs": "0.64.3-beta.4",
     "abstract-leveldown": "^6.0.2",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
@@ -65,6 +65,7 @@
     "apollo-server": "^2.4.8",
     "aws-sdk": "^2.441.0",
     "bs58": "^4.0.1",
+    "eth-sig-util": "1.4.2",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
     "graphql-type-json": "^0.3.0",
