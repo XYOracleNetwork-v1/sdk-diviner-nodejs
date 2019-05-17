@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-diviner-nodejs",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "XYO Diviner SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -74,6 +74,7 @@
     "levelup": "^4.0.1",
     "lodash": "^4.17.11",
     "lru-cache": "^5.1.1",
+    "opennode": "^1.1.1",
     "web3": "^1.0.0-beta.55",
     "yargs": "^13.2.2"
   }
