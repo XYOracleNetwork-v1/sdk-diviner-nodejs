@@ -50,7 +50,7 @@ class IntersectionCondition implements IXyoFilter {
 }
 
 export const intersectionFilter: IXyoFilterCreator = {
-  name: 'intersection',
+  name: 'FILTER_INTERSECTION',
   create: (config: any,  filters: Map<string, IXyoFilterCreator>) => {
     return new IntersectionCondition(config)
   }

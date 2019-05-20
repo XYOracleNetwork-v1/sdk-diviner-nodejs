@@ -25,7 +25,7 @@ class LocationMutator implements IXyoMutator {
 }
 
 export const locationMutator: IXyoMutatorCreater = {
-  name: 'firstLocation',
+  name: 'MUTATOR_LOCATION',
   create: (config: any,  creators: Map<string, IXyoMutatorCreater>) => {
     addAllDefaults()
     return new LocationMutator()

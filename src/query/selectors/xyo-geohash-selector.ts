@@ -24,7 +24,7 @@ class GeohashSelector implements IXyoSelector {
 
 export const createGeohashSelectorCreator = (tracer: IXyoBlocksByGeohashRepository): IXyoSelecterCreator => {
   return {
-    name: 'geohashSelector',
+    name: 'SELECTOR_GEOHASH',
     create: (config: any, creators: Map<string, IXyoSelecterCreator>) => {
       return new GeohashSelector(config, tracer)
     }

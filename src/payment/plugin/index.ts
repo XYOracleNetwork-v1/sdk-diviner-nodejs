@@ -7,6 +7,8 @@ import { XyoEthRedeemEndpoint } from './endpoints/xyo-eth-redeem-credits'
 import { XyoChainScan } from '../../query/xyo-chain-scan'
 import { XyoQueryAuth } from '../../query/auth/xyo-query-auth'
 import { XyoPayToEndpoint } from './endpoints/xyo-payto-endpoint'
+import { XyoLightningPayment } from '../lightning'
+import { XyoLightingEndpoint } from './endpoints/xyo-btc-invoice'
 
 class EthPaymentPlugin implements IXyoPlugin {
 
@@ -30,6 +32,8 @@ class EthPaymentPlugin implements IXyoPlugin {
     const spendEndpoint = new XyoSpendEndpoint(store)
     const scan = deps.CHAIN_SCAN as XyoChainScan
     const ethEndpoint = new XyoEthRedeemEndpoint(new XyoEthPaymentValidator('https://mainnet.infura.io/v3/79ea25bb01d34467a8179dbe940d5b68', store))
+    const lightning = new XyoLightningPayment(store)
+    const lightningEndpoint = new XyoLightingEndpoint(lightning)
     const payToEndpoint = new XyoPayToEndpoint()
     scan.auth = new XyoQueryAuth(store)
 
@@ -50,6 +54,10 @@ class EthPaymentPlugin implements IXyoPlugin {
 
     graphql.addQuery(XyoPayToEndpoint.query)
     graphql.addResolver(XyoPayToEndpoint.queryName, payToEndpoint)
+
+    graphql.addType(XyoLightingEndpoint.type)
+    graphql.addQuery(XyoLightingEndpoint.query)
+    graphql.addResolver(XyoLightingEndpoint.queryName, lightningEndpoint)
 
     return true
   }

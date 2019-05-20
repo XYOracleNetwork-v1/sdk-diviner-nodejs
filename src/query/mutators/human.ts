@@ -20,7 +20,7 @@ class HumanMutator implements IXyoMutator {
 }
 
 export const humanMutator: IXyoMutatorCreater = {
-  name: 'human',
+  name: 'MUTATOR_HUMAN',
   create: (config: any,  creators: Map<string, IXyoMutatorCreater>) => {
     addAllDefaults()
     return new HumanMutator()

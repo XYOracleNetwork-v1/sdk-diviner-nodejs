@@ -8,6 +8,7 @@ import { locationMutator } from '../mutators/location'
 import { humanMutator } from '../mutators/human'
 import { IXyoBlocksByGeohashRepository } from '@xyo-network/sdk-core-nodejs'
 import { createGeohashSelectorCreator } from '../selectors/xyo-geohash-selector'
+import { XyoSupportedResolver } from './xyo-supported-resolver'
 
 class XyoChainScanPlugin implements IXyoPlugin {
   public CHAIN_SCAN: XyoChainScan | undefined
@@ -32,19 +33,34 @@ class XyoChainScanPlugin implements IXyoPlugin {
     const geohash = deps.BLOCK_REPOSITORY_PUBLIC_GEOHASH as IXyoBlocksByGeohashRepository
     const scanner = new XyoChainScan()
     const endpoint = new XyoChainScanEndpoint(scanner)
+    const indexSelector = createIndexSelectorCreator(tracer)
+    const geohashSelector = createGeohashSelectorCreator(geohash)
 
     if (!graphql) {
       throw new Error('XyoChainScanPlugin expecting graphql')
     }
 
-    scanner.addSelector(createIndexSelectorCreator(tracer))
-    scanner.addSelector(createGeohashSelectorCreator(geohash))
+    scanner.addSelector(indexSelector)
+    scanner.addSelector(geohashSelector)
     scanner.addMutator(locationMutator)
     scanner.addFilter(intersectionFilter)
     scanner.addMutator(humanMutator)
 
+    const supported = [
+      indexSelector.name,
+      geohashSelector.name,
+      locationMutator.name,
+      intersectionFilter.name,
+      humanMutator.name
+    ]
+
+    const supportedResolver = new XyoSupportedResolver(supported)
+
     graphql.addQuery(XyoChainScanEndpoint.query)
     graphql.addResolver(XyoChainScanEndpoint.queryName, endpoint)
+
+    graphql.addQuery(XyoSupportedResolver.query)
+    graphql.addResolver(XyoSupportedResolver.queryName, supportedResolver)
 
     this.CHAIN_SCAN = scanner
 

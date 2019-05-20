@@ -27,7 +27,7 @@ class XyoIndexSelector implements IXyoSelector {
 
 export const createIndexSelectorCreator = (tracer: IXyoChainTracer): IXyoSelecterCreator => {
   return {
-    name: 'indexSelector',
+    name: 'SELECTOR_INDEX',
     create: (config: any, creators: Map<string, IXyoSelecterCreator>) => {
       return new XyoIndexSelector(config, tracer)
     }

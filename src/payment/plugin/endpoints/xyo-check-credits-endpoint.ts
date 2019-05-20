@@ -2,7 +2,7 @@ import { IXyoPaymentStore } from '../..'
 
 export class XyoCreditEndpoint {
 
-  public static query = 'credits(apiKey: String): Int'
+  public static query = 'credits(apiKey: String): Float'
   public static queryName = 'credits'
   private spendStore: IXyoPaymentStore
 
