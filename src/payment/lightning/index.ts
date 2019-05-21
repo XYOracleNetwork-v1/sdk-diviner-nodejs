@@ -32,11 +32,12 @@ export class XyoLightningPayment extends XyoBase {
     this.server = new Server(options)
     this.server.route(paymentRoute)
     this.server.start()
-    this.logInfo(`Webhook server started at url: http://localhost:${options.port}/`)
+    this.logInfo(`Webhook server ready at url: http://localhost:${options.port}/`)
     // setInterval(this.checkInvoices, 5_000)
   }
   public async createInvoice(apiKey: string, usd: number): Promise < any > {
-    openNode.setCredentials('c80390c6-ecc6-414c-91fe-0557650aa189', 'dev')
+    // openNode.setCredentials('c80390c6-ecc6-414c-91fe-0557650aa189', 'dev')
+    openNode.setCredentials('29322983-66cd-4476-a82e-fe4a3caad1dd', 'live')
 
     this.logInfo(`Creating invoice with ${apiKey} - ${usd}`)
 
@@ -67,7 +68,10 @@ export class XyoLightningPayment extends XyoBase {
       const currentCredits = await(this.store.getCreditsForKey(this.changeIdToApiKey[paymentid])) || 0
       const amountToBeAdded = this.changeIdToAmount[paymentid]
       this.logInfo(`Adding ${ amountToBeAdded } credit(s) to ${ this.changeIdToApiKey[paymentid] } `)
-      this.store.setCreditsForKey(this.changeIdToApiKey[paymentid], currentCredits + amountToBeAdded)
+      if (!(await this.store.didSpend(this.changeIdToApiKey[paymentid]))) {
+        this.store.spent(this.changeIdToApiKey[paymentid])
+        this.store.setCreditsForKey(this.changeIdToApiKey[paymentid], currentCredits + amountToBeAdded)
+      }
     }
     return true
   }
