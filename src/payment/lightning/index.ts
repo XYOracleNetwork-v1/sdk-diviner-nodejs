@@ -2,8 +2,10 @@ import { IXyoPaymentStore } from '..'
 import opennode from 'opennode'
 import { XyoBase } from '@xyo-network/sdk-base-nodejs'
 
-// todo write types for opennode
+// todo write types for opennode & happy
 const openNode = opennode as any
+
+import { Request, ResponseToolkit, Server, ServerOptions, ServerRoute } from 'hapi'
 
 export class XyoLightningPayment extends XyoBase {
   private changeIdToAmount: {[key: string]: number} = {}
@@ -11,11 +13,25 @@ export class XyoLightningPayment extends XyoBase {
   private openInvoices: string[] = []
   private store: IXyoPaymentStore
   private isLooking = false
+  private server: Server
+  private paymentRoute: ServerRoute = {
+    path:'/btcPayment',
+    method:'POST',
+    handler(request, h) {
+      console.log(request.payload)
+    }
+  }
 
   constructor(store: IXyoPaymentStore) {
     super()
     this.store = store
 
+    const options: ServerOptions = {
+      port: 10999,
+    }
+
+    this.server = new Server(options)
+    this.server.route(this.paymentRoute)
     setInterval(this.checkInvoices, 5_000)
   }
 
@@ -27,7 +43,7 @@ export class XyoLightningPayment extends XyoBase {
     const charge = await openNode.createCharge({
       amount: usd,
       currency: 'USD',
-      callback_url: 'http://localhost:9100/openNodeHook',
+      callback_url: 'http://24.249.205.59:10999',
       auto_settle: false
     })
 

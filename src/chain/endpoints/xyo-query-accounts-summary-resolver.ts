@@ -2,9 +2,9 @@ export class XyoAccountsResolver {
 
   public static query = 'queryAccountsSummary(): '
   public static queryName = 'accountsSummary'
-  private totalAccounts: Number
+  private totalAccounts: number
 
-  constructor(total: Number) {
+  constructor(total: number) {
     this.totalAccounts = total
   }
 

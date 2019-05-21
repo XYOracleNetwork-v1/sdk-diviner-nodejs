@@ -2,9 +2,9 @@ export class XyoQuerieCountEndpoint {
 
   public static query = 'queryCountByHourSummary(): '
   public static queryName = 'countByHourSummary'
-  private queryStats: Map<Number, Number>
+  private queryStats: Map<number, number>
 
-  constructor(mapping: Map<Number, Number>) {
+  constructor(mapping: Map<number, number>) {
     this.queryStats = mapping
   }
 
