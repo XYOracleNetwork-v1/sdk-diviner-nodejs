@@ -1,5 +1,6 @@
 import { IXyoPlugin, IXyoGraphQlDelegate } from '@xyo-network/sdk-base-nodejs'
-import { DynamoSpendRepository } from '../repository/dynammodb/dynammo-spend-store'
+// import { DynamoSpendRepository } from '../repository/dynammodb/dynammo-spend-store'
+import { RamSpendRepository } from '../repository/dynammodb/ram-spend-store'
 import { XyoEthPaymentValidator } from '../eth/xyo-eth-payment'
 import { XyoCreditEndpoint } from './endpoints/xyo-check-credits-endpoint'
 import { XyoSpendEndpoint } from './endpoints/xyo-is-spent-endpoint'
@@ -22,20 +23,21 @@ class EthPaymentPlugin implements IXyoPlugin {
 
   public getPluginDependencies(): string[] {
     return [
-      'CHAIN_SCAN'
+      // 'CHAIN_SCAN'
     ]
   }
 
   public async initialize(deps: { [key: string]: any; }, config: any, graphql?: IXyoGraphQlDelegate | undefined): Promise<boolean> {
-    const store = new DynamoSpendRepository()
+    // const store = new DynamoSpendRepository()
+    const store = new RamSpendRepository()
     const creditEndpoint = new XyoCreditEndpoint(store)
     const spendEndpoint = new XyoSpendEndpoint(store)
-    const scan = deps.CHAIN_SCAN as XyoChainScan
+    // const scan = deps.CHAIN_SCAN as XyoChainScan
     const ethEndpoint = new XyoEthRedeemEndpoint(new XyoEthPaymentValidator('https://mainnet.infura.io/v3/79ea25bb01d34467a8179dbe940d5b68', store))
     const lightning = new XyoLightningPayment(store)
     const lightningEndpoint = new XyoLightingEndpoint(lightning)
     const payToEndpoint = new XyoPayToEndpoint()
-    scan.auth = new XyoQueryAuth(store)
+    // scan.auth = new XyoQueryAuth(store)
 
     await store.initialize()
 

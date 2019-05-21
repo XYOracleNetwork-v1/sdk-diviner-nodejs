@@ -14,13 +14,6 @@ export class XyoLightningPayment extends XyoBase {
   private store: IXyoPaymentStore
   private isLooking = false
   private server: Server
-  private paymentRoute: ServerRoute = {
-    path:'/btcPayment',
-    method:'POST',
-    handler(request, h) {
-      console.log(request.payload)
-    }
-  }
 
   constructor(store: IXyoPaymentStore) {
     super()
@@ -30,12 +23,19 @@ export class XyoLightningPayment extends XyoBase {
       port: 10999,
     }
 
-    this.server = new Server(options)
-    this.server.route(this.paymentRoute)
-    setInterval(this.checkInvoices, 5_000)
-  }
+    const paymentRoute: ServerRoute = {
+      path:'/btcPayment',
+      method:'POST',
+      handler: this.handler
+    }
 
-  public async createInvoice (apiKey: string, usd: number): Promise<any> {
+    this.server = new Server(options)
+    this.server.route(paymentRoute)
+    this.server.start()
+    this.logInfo(`Webhook server started at url: http://localhost:${options.port}/`)
+    // setInterval(this.checkInvoices, 5_000)
+  }
+  public async createInvoice(apiKey: string, usd: number): Promise < any > {
     openNode.setCredentials('c80390c6-ecc6-414c-91fe-0557650aa189', 'dev')
 
     this.logInfo(`Creating invoice with ${apiKey} - ${usd}`)
@@ -43,13 +43,13 @@ export class XyoLightningPayment extends XyoBase {
     const charge = await openNode.createCharge({
       amount: usd,
       currency: 'USD',
-      callback_url: 'http://24.249.205.59:10999',
+      callback_url: 'http://24.249.205.59:10999/btcPayment',
       auto_settle: false
     })
 
     this.logInfo(`Created invoice with ${apiKey} - ${usd} - ${charge.id}`)
 
-    this.openInvoices.push(charge.id)
+    // this.openInvoices.push(charge.id)
     this.changeIdToApiKey[charge.id] = apiKey
     this.changeIdToAmount[charge.id] = usd
 
@@ -60,6 +60,18 @@ export class XyoLightningPayment extends XyoBase {
     }
   }
 
+  private handler = async (request: Request, reply: ResponseToolkit) => {
+    const status = (request.payload as any).status
+    if (status === 'paid') {
+      const paymentid = (request.payload as any).id
+      const currentCredits = await(this.store.getCreditsForKey(this.changeIdToApiKey[paymentid])) || 0
+      const amountToBeAdded = this.changeIdToAmount[paymentid]
+      this.logInfo(`Adding ${ amountToBeAdded } credit(s) to ${ this.changeIdToApiKey[paymentid] } `)
+      this.store.setCreditsForKey(this.changeIdToApiKey[paymentid], currentCredits + amountToBeAdded)
+    }
+    return true
+  }
+  /*
   private checkInvoices = async () => {
     if (!this.isLooking) {
       this.logInfo('Checking for invoices')
@@ -69,14 +81,14 @@ export class XyoLightningPayment extends XyoBase {
       const atTimeInvoices = this.openInvoices
 
       for (const invoice of atTimeInvoices) {
-        this.logInfo(`Checking ${invoice}`)
+        this.logInfo(`Checking ${ invoice }`)
         const isCompleted = await this.checkInvoice(invoice)
 
         if (isCompleted) {
           const currentCredits =  await (this.store.getCreditsForKey(this.changeIdToApiKey[invoice])) || 0
           const amountToBeAdded = this.changeIdToAmount[invoice]
-          this.logInfo(`Is completed ${invoice} ${amountToBeAdded}`)
-          await this.store.setCreditsForKey(this.changeIdToApiKey[invoice], (amountToBeAdded * 0.5) + currentCredits)
+          this.logInfo(`Is completed ${ invoice } ${ amountToBeAdded }`)
+          await this.store.setCreditsForKey(this.changeIdToApiKey[invoice], (amountToBeAdded * 1) + currentCredits)
           toRemove.push(invoice)
         }
 
@@ -97,8 +109,9 @@ export class XyoLightningPayment extends XyoBase {
     }
 
   }
+  */
 
-  private async checkInvoice (changeId: string): Promise<boolean> {
+  private async checkInvoice(changeId: string): Promise < boolean > {
     const charge = await openNode.chargeInfo(changeId)
 
     return charge.status === 'paid'
