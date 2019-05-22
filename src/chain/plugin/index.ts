@@ -10,7 +10,7 @@ class XyoChainTracerPlugin implements IXyoPlugin {
   public CHAIN_TRACER: IXyoChainTracer | undefined
 
   public getName(): string {
-    return 'chain-tracer'
+    return 'diviner-chain-tracer'
   }
 
   public getProvides(): string[] {

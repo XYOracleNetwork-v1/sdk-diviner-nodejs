@@ -5,7 +5,7 @@ import { createGeohashSelectorCreator } from '../../selectors/xyo-geohash-select
 
 class XyoGeohashQuery implements IXyoPlugin {
   public getName(): string {
-    return 'query-geohash'
+    return 'query-selector-geohash'
   }
 
   public getProvides(): string[] {

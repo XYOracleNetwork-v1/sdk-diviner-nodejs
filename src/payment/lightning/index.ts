@@ -12,7 +12,6 @@ export class XyoLightningPayment extends XyoBase {
   private changeIdToApiKey: {[key: string]: string} = {}
   private openInvoices: string[] = []
   private store: IXyoPaymentStore
-  private isLooking = false
   private server: Server
 
   constructor(store: IXyoPaymentStore) {

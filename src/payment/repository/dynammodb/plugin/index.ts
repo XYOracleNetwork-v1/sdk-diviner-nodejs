@@ -11,7 +11,7 @@ class DynamoStoreRepositoryPlugin implements IXyoPlugin {
   public PAYMENT_STORE: IXyoPaymentStore | undefined
 
   public getName(): string {
-    return 'eth-payment'
+    return 'payment-store-dynamo'
   }
 
   public getProvides(): string[] {

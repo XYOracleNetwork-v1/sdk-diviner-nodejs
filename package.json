@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-diviner-nodejs",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "description": "XYO Diviner SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,8 +29,13 @@
   },
   "xyoPlugins": [
     "dist/chain/plugin/index.js",
-    "dist/query/plugin/index.js",
-    "dist/payment/plugin/index.js"
+    "dist/payment/eth/plugin/index.js",
+    "dist/payment/lightning/plugin/index.js",
+    "dist/payment/plugin/index.js",
+    "dist/payment/repository/dynammodb/plugin/index.js",
+    "dist/query/plugin/query/index.js",
+    "dist/query/plugin/query-chain-tracer/index.js",
+    "dist/query/plugin/query-geohash/index.js"
   ],
   "devDependencies": {
     "@types/bs58": "^4.0.0",

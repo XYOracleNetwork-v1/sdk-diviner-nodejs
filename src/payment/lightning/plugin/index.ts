@@ -3,10 +3,10 @@ import { XyoLightingEndpoint } from './endpoints/xyo-btc-invoice'
 import { IXyoPaymentStore } from '../..'
 import { XyoLightningPayment } from '..'
 
-class EthPaymentPlugin implements IXyoPlugin {
+class BtcPaymentPlugin implements IXyoPlugin {
 
   public getName(): string {
-    return 'eth-payment'
+    return 'btc-payment'
   }
 
   public getProvides(): string[] {
@@ -33,4 +33,4 @@ class EthPaymentPlugin implements IXyoPlugin {
 
 }
 
-export = new EthPaymentPlugin()
+export = new BtcPaymentPlugin()

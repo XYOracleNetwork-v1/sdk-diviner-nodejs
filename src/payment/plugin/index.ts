@@ -8,7 +8,7 @@ import { IXyoPaymentStore } from '..'
 class QueryPaymentPlugin implements IXyoPlugin {
 
   public getName(): string {
-    return 'eth-payment'
+    return 'query-payment'
   }
 
   public getProvides(): string[] {

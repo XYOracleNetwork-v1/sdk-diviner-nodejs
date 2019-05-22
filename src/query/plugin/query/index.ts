@@ -10,7 +10,7 @@ class XyoChainScanPlugin implements IXyoPlugin {
   public QUERY: XyoQuery | undefined
 
   public getName(): string {
-    return 'query'
+    return 'diviner-base-query'
   }
 
   public getProvides(): string[] {
