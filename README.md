@@ -13,14 +13,35 @@
 [![David Badge](https://david-dm.org/xyoraclenetwork/sdk-archivist-nodejs/status.svg)](https://david-dm.org/xyoraclenetwork/sdk-archivist-nodejs)
 [![David Badge](https://david-dm.org/xyoraclenetwork/sdk-archivist-nodejs/dev-status.svg)](https://david-dm.org/xyoraclenetwork/sdk-archivist-nodejs)
 
-## Project Overview
+## Table of Contents
 
-### Scope of features
+-   [Sections](#sections)
+-   [Title](#Simple-Consensus-Smart-Contract-Dapp-Library)
+-   [Short Description](#short-description)
+-   [Long Description](#long-description)
+-   [Scope of Features](#scope-of-features)
+-   [Install](#install)
+-   [Usage](#usage)
+-   [Maintainers](#maintainers)
+-   [License](#license)
+-   [Credits](#credits)
+
+## Short Description
+
+## Long Description
+
+## Scope of features
+
+## Install
+
+## Usage
+
+## Maintainers
 
 ## License
 
-Only for internal XY Company use at this time
+See the [LICENSE.md](LICENSE) file for license details.
 
 ## Credits
 
-Made with  ❤️  by [**XY - The Persistent Company**] (https://xy.company)
+Made with 🔥 and ❄️ by [XY - The Persistent Company](https://www.xy.company)
