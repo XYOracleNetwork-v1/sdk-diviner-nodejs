@@ -1,4 +1,4 @@
-import { XyoQuery } from '../xyo-query'
+import { XyoQuery } from '../../xyo-query'
 
 export class XyoChainScanEndpoint {
 
