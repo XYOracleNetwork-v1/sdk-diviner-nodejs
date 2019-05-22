@@ -36,8 +36,7 @@
 
 ## License
 
-This project is licensed under the GNU Lesser General Public License
-Version 3 License - see the LICENSE.md file for details
+See the [LICENSE.md](LICENSE) file for license details.
 
 ## Credits
 
