@@ -1,4 +1,4 @@
-import { XyoLightningPayment } from '../../lightning'
+import { XyoLightningPayment } from '../..'
 
 export class XyoLightingEndpoint {
 
