@@ -30,5 +30,8 @@
         "Copyright <<projectCreationYear>> - <<year>> <<copyrightholder>>"
       ]
     }
+  ],
+  "cSpell.words": [
+    "Geohash"
   ]
 }
