@@ -1,5 +1,5 @@
 import { IXyoPlugin, IXyoGraphQlDelegate } from '@xyo-network/sdk-base-nodejs'
-import { DynamoSpendRepository } from '../repository/dynammodb/dynammo-spend-store'
+import { RamSpendRepository } from '../repository/dynammodb/ram-spend-store'
 import { XyoEthPaymentValidator } from '../eth/xyo-eth-payment'
 import { XyoCreditEndpoint } from './endpoints/xyo-check-credits-endpoint'
 import { XyoSpendEndpoint } from './endpoints/xyo-is-spent-endpoint'
@@ -9,6 +9,7 @@ import { XyoQueryAuth } from '../../query/auth/xyo-query-auth'
 import { XyoPayToEndpoint } from './endpoints/xyo-payto-endpoint'
 import { XyoLightningPayment } from '../lightning'
 import { XyoLightingEndpoint } from './endpoints/xyo-btc-invoice'
+import { DynamoSpendRepository } from '../repository/dynammodb/dynammo-spend-store'
 
 class EthPaymentPlugin implements IXyoPlugin {
 
