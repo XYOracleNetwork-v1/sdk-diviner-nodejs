@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoGraphQlDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
 import { RamSpendRepository } from '../repository/dynammodb/ram-spend-store'
 import { XyoEthPaymentValidator } from '../eth/xyo-eth-payment'
 import { XyoCreditEndpoint } from './endpoints/xyo-check-credits-endpoint'
@@ -27,11 +27,11 @@ class EthPaymentPlugin implements IXyoPlugin {
     ]
   }
 
-  public async initialize(deps: { [key: string]: any; }, config: any, graphql?: IXyoGraphQlDelegate | undefined): Promise<boolean> {
+  public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
     const store = new DynamoSpendRepository()
     const creditEndpoint = new XyoCreditEndpoint(store)
     const spendEndpoint = new XyoSpendEndpoint(store)
-    const scan = deps.QUERY as XyoQuery
+    const scan = delegate.deps.QUERY as XyoQuery
     const ethEndpoint = new XyoEthRedeemEndpoint(new XyoEthPaymentValidator('https://mainnet.infura.io/v3/79ea25bb01d34467a8179dbe940d5b68', store))
     const lightning = new XyoLightningPayment(store)
     const lightningEndpoint = new XyoLightingEndpoint(lightning)
@@ -40,25 +40,21 @@ class EthPaymentPlugin implements IXyoPlugin {
 
     await store.initialize()
 
-    if (!graphql) {
-      throw new Error('XyoChainScanPlugin expecting graphql')
-    }
+    delegate.graphql.addQuery(XyoCreditEndpoint.query)
+    delegate.graphql.addResolver(XyoCreditEndpoint.queryName, creditEndpoint)
 
-    graphql.addQuery(XyoCreditEndpoint.query)
-    graphql.addResolver(XyoCreditEndpoint.queryName, creditEndpoint)
+    delegate.graphql.addQuery(XyoSpendEndpoint.query)
+    delegate.graphql.addResolver(XyoSpendEndpoint.queryName, spendEndpoint)
 
-    graphql.addQuery(XyoSpendEndpoint.query)
-    graphql.addResolver(XyoSpendEndpoint.queryName, spendEndpoint)
+    delegate.graphql.addQuery(XyoEthRedeemEndpoint.query)
+    delegate.graphql.addResolver(XyoEthRedeemEndpoint.queryName, ethEndpoint)
 
-    graphql.addQuery(XyoEthRedeemEndpoint.query)
-    graphql.addResolver(XyoEthRedeemEndpoint.queryName, ethEndpoint)
+    delegate.graphql.addQuery(XyoPayToEndpoint.query)
+    delegate.graphql.addResolver(XyoPayToEndpoint.queryName, payToEndpoint)
 
-    graphql.addQuery(XyoPayToEndpoint.query)
-    graphql.addResolver(XyoPayToEndpoint.queryName, payToEndpoint)
-
-    graphql.addType(XyoLightingEndpoint.type)
-    graphql.addQuery(XyoLightingEndpoint.query)
-    graphql.addResolver(XyoLightingEndpoint.queryName, lightningEndpoint)
+    delegate.graphql.addType(XyoLightingEndpoint.type)
+    delegate.graphql.addQuery(XyoLightingEndpoint.query)
+    delegate.graphql.addResolver(XyoLightingEndpoint.queryName, lightningEndpoint)
 
     return true
   }

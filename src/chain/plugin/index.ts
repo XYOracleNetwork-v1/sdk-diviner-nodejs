@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoGraphQlDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
 import { IXyoOriginBlockGetter, IXyoBlockByPublicKeyRepository } from '@xyo-network/sdk-core-nodejs'
 import { XyoPublicKeyTracer } from '../xyo-public-key-tracer'
 import { XyoHashTracer } from '../xyo-hash-tracer'
@@ -26,19 +26,15 @@ class XyoChainTracerPlugin implements IXyoPlugin {
     ]
   }
 
-  public async initialize(deps: { [key: string]: any; }, config: any, graphql?: IXyoGraphQlDelegate | undefined): Promise<boolean> {
-    const blockRepo = deps.BLOCK_REPOSITORY_GET as IXyoOriginBlockGetter
-    const publicKeyRepo = deps.BLOCK_REPOSITORY_PUBLIC_KEY as IXyoBlockByPublicKeyRepository
+  public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
+    const blockRepo = delegate.deps.BLOCK_REPOSITORY_GET as IXyoOriginBlockGetter
+    const publicKeyRepo = delegate.deps.BLOCK_REPOSITORY_PUBLIC_KEY as IXyoBlockByPublicKeyRepository
     const hashTracer = new XyoHashTracer(blockRepo)
     const tracer = new XyoPublicKeyTracer(hashTracer, publicKeyRepo)
     const graphqlEndpoint = new XyoChainTracerEndpoint(tracer)
 
-    if (!graphql) {
-      throw new Error('Expecting graphql')
-    }
-
-    graphql.addQuery(XyoChainTracerEndpoint.query)
-    graphql.addResolver(XyoChainTracerEndpoint.queryName, graphqlEndpoint)
+    delegate.graphql.addQuery(XyoChainTracerEndpoint.query)
+    delegate.graphql.addResolver(XyoChainTracerEndpoint.queryName, graphqlEndpoint)
 
     this.CHAIN_TRACER = tracer
 

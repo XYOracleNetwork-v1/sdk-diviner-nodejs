@@ -404,16 +404,13 @@
     tslint-react "^3.6.0"
     tsutils "^3.5.0"
 
-"@xyo-network/object-model@^0.5.10", "@xyo-network/object-model@^0.5.11":
-  version "0.5.11"
-  resolved "https://registry.yarnpkg.com/@xyo-network/object-model/-/object-model-0.5.11.tgz#83fa7a7596ffdb5bac622d42b418e19b7ea1a119"
-  integrity sha512-3DiKSOquRYInJKggO1nsESkbIgqcGWzoqF0bfZaiJVEF4JwQEICIk9Qcvsd0KJCyDfuYsMNNoUeEIxz4EtP5gw==
-
-"@xyo-network/sdk-base-nodejs@0.2.23":
-  version "0.2.23"
-  resolved "https://registry.yarnpkg.com/@xyo-network/sdk-base-nodejs/-/sdk-base-nodejs-0.2.23.tgz#337b3f3321975e65d96081896621bc3e1c2766e0"
-  integrity sha512-jqT150Re26p7N52WgOGcvo8UjeHjs7d0XUyQBUD7ebohICCrS8ftL4h7zuXMBQTKIiDqCQwoibx8m+xVEsgIcQ==
+"@xyo-network/sdk-base-nodejs@0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@xyo-network/sdk-base-nodejs/-/sdk-base-nodejs-0.4.1.tgz#e4f0de2b77b288384c4a4b060817cbbe37c8fb15"
+  integrity sha512-XvSesON4dcNdq9KBeFael+czRywLdBiq2mr3X9eG9hX7pnf+aIjZB8gDSuj3alAkzvp7rFYA3OaX1duEh//izQ==
   dependencies:
+    chalk "^2.4.2"
+    fs-extra "^7.0.1"
     winston "3.2.1"
 
 "@xyo-network/sdk-base-nodejs@^0.3.10":
@@ -425,13 +422,12 @@
     fs-extra "^7.0.1"
     winston "3.2.1"
 
-"@xyo-network/sdk-core-nodejs@0.64.3-beta.4":
-  version "0.64.3-beta.4"
-  resolved "https://registry.yarnpkg.com/@xyo-network/sdk-core-nodejs/-/sdk-core-nodejs-0.64.3-beta.4.tgz#080412d15803a4775db4f770ff3df777ea4b6723"
-  integrity sha512-n8kmuXB8ESCVHKm1wOCVlwgwvqFjBSSSOd6EPLeCZ5xaGTg69z3uXyuaDpZdvHcmCmYkMegXmA2od8txEHsZMA==
+"@xyo-network/sdk-core-nodejs@0.69.0":
+  version "0.69.0"
+  resolved "https://registry.yarnpkg.com/@xyo-network/sdk-core-nodejs/-/sdk-core-nodejs-0.69.0.tgz#14d9c7edff907d37325fc72eff2c2c3000f98457"
+  integrity sha512-1/7eOIW7qIoItcY9Bm4DeLQ6K7bRsLj+g9LKMHVxmJmHlr6H5tFVX4X78xdWh0QDea6hvWzRz++6wZv9Tui21Q==
   dependencies:
-    "@xyo-network/object-model" "^0.5.11"
-    "@xyo-network/sdk-base-nodejs" "0.2.23"
+    "@xyo-network/sdk-base-nodejs" "^0.3.10"
     bs58 "4.0.1"
     elliptic "6.4.1"
 

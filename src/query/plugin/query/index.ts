@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoGraphQlDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
 import { XyoQuery } from '../../xyo-query'
 import { XyoChainScanEndpoint } from './xyo-scan-resolver'
 import { intersectionFilter } from '../../filters/intersection'
@@ -21,24 +21,20 @@ class XyoChainScanPlugin implements IXyoPlugin {
     return []
   }
 
-  public async initialize(deps: { [key: string]: any; }, config: any, graphql?: IXyoGraphQlDelegate | undefined): Promise<boolean> {
+  public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
     const scanner = new XyoQuery()
     const endpoint = new XyoChainScanEndpoint(scanner)
     const supportedResolver = new XyoSupportedResolver(scanner)
-
-    if (!graphql) {
-      throw new Error('XyoChainScanPlugin expecting graphql')
-    }
 
     scanner.addMutator(locationMutator)
     scanner.addFilter(intersectionFilter)
     scanner.addMutator(humanMutator)
 
-    graphql.addQuery(XyoChainScanEndpoint.query)
-    graphql.addResolver(XyoChainScanEndpoint.queryName, endpoint)
+    delegate.graphql.addQuery(XyoChainScanEndpoint.query)
+    delegate.graphql.addResolver(XyoChainScanEndpoint.queryName, endpoint)
 
-    graphql.addQuery(XyoSupportedResolver.query)
-    graphql.addResolver(XyoSupportedResolver.queryName, supportedResolver)
+    delegate.graphql.addQuery(XyoSupportedResolver.query)
+    delegate.graphql.addResolver(XyoSupportedResolver.queryName, supportedResolver)
 
     this.QUERY = scanner
 

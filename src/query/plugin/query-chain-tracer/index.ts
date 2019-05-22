@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoGraphQlDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
 import { IXyoChainTracer } from '../../../chain'
 import { XyoQuery } from '../../xyo-query'
 import { createIndexSelectorCreator } from '../../selectors/xyo-index-selector'
@@ -19,9 +19,9 @@ class XyoChainTracerQuery implements IXyoPlugin {
     ]
   }
 
-  public async initialize(deps: { [key: string]: any; }, config: any, graphql?: IXyoGraphQlDelegate | undefined): Promise<boolean> {
-    const tracer = deps.CHAIN_TRACER as IXyoChainTracer
-    const query = deps.QUERY as XyoQuery
+  public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
+    const tracer = delegate.deps.CHAIN_TRACER as IXyoChainTracer
+    const query = delegate.deps.QUERY as XyoQuery
     const selector = createIndexSelectorCreator(tracer)
 
     query.addSelector(selector)
