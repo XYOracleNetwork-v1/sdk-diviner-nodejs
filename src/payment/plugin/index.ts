@@ -4,7 +4,7 @@ import { XyoEthPaymentValidator } from '../eth/xyo-eth-payment'
 import { XyoCreditEndpoint } from './endpoints/xyo-check-credits-endpoint'
 import { XyoSpendEndpoint } from './endpoints/xyo-is-spent-endpoint'
 import { XyoEthRedeemEndpoint } from './endpoints/xyo-eth-redeem-credits'
-import { XyoChainScan } from '../../query/xyo-chain-scan'
+import { XyoQuery } from '../../query/xyo-query'
 import { XyoQueryAuth } from '../../query/auth/xyo-query-auth'
 import { XyoPayToEndpoint } from './endpoints/xyo-payto-endpoint'
 import { XyoLightningPayment } from '../lightning'
@@ -22,7 +22,7 @@ class EthPaymentPlugin implements IXyoPlugin {
 
   public getPluginDependencies(): string[] {
     return [
-      'CHAIN_SCAN'
+      'QUERY'
     ]
   }
 
@@ -30,7 +30,7 @@ class EthPaymentPlugin implements IXyoPlugin {
     const store = new DynamoSpendRepository()
     const creditEndpoint = new XyoCreditEndpoint(store)
     const spendEndpoint = new XyoSpendEndpoint(store)
-    const scan = deps.CHAIN_SCAN as XyoChainScan
+    const scan = deps.QUERY as XyoQuery
     const ethEndpoint = new XyoEthRedeemEndpoint(new XyoEthPaymentValidator('https://mainnet.infura.io/v3/79ea25bb01d34467a8179dbe940d5b68', store))
     const lightning = new XyoLightningPayment(store)
     const lightningEndpoint = new XyoLightingEndpoint(lightning)
