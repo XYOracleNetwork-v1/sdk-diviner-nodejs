@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
 import { IXyoChainTracer } from '../../../chain'
 import { XyoQuery } from '../../xyo-query'
 import { createIndexSelectorCreator } from '../../selectors/xyo-index-selector'
@@ -14,8 +14,8 @@ class XyoChainTracerQuery implements IXyoPlugin {
 
   public getPluginDependencies(): string[] {
     return [
-      'CHAIN_TRACER',
-      'QUERY'
+      XyoPluginProviders.CHAIN_TRACER,
+      XyoPluginProviders.QUERY,
     ]
   }
 

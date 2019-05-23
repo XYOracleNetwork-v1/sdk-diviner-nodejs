@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
 import { IXyoPaymentStore } from '../../..'
 import { DynamoSpendRepository } from '../dynammo-spend-store'
 
@@ -16,7 +16,7 @@ class DynamoStoreRepositoryPlugin implements IXyoPlugin {
 
   public getProvides(): string[] {
     return [
-      'PAYMENT_STORE'
+      XyoPluginProviders.PAYMENT_STORE
     ]
   }
 

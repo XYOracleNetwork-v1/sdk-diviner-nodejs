@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-diviner-nodejs",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "XYO Diviner SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -62,7 +62,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "@xyo-network/sdk-base-nodejs": "0.5.2",
+    "@xyo-network/sdk-base-nodejs": "0.5.6",
     "@xyo-network/sdk-core-nodejs": "0.70.1",
     "abstract-leveldown": "^6.0.2",
     "apollo-cache-inmemory": "^1.5.1",

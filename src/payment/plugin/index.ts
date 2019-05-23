@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
 import { XyoCreditEndpoint } from './endpoints/xyo-check-credits-endpoint'
 import { XyoSpendEndpoint } from './endpoints/xyo-is-spent-endpoint'
 import { XyoQuery } from '../../query/xyo-query'
@@ -17,8 +17,8 @@ class QueryPaymentPlugin implements IXyoPlugin {
 
   public getPluginDependencies(): string[] {
     return [
-      'QUERY',
-      'PAYMENT_STORE'
+      XyoPluginProviders.QUERY,
+      XyoPluginProviders.PAYMENT_STORE
     ]
   }
 

@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
 import { XyoLightingEndpoint } from './endpoints/xyo-btc-invoice'
 import { IXyoPaymentStore } from '../..'
 import { XyoLightningPayment } from '..'
@@ -15,7 +15,7 @@ class BtcPaymentPlugin implements IXyoPlugin {
 
   public getPluginDependencies(): string[] {
     return [
-      'PAYMENT_STORE'
+      XyoPluginProviders.PAYMENT_STORE
     ]
   }
 

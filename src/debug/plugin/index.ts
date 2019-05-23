@@ -1,5 +1,5 @@
-import { IXyoPlugin, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
-import { XyoJsonBoundWitnessCreator, addAllDefaults } from '@xyo-network/sdk-core-nodejs'
+import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+import { addAllDefaults } from '@xyo-network/sdk-core-nodejs'
 import { XyoDebugEndpoint } from './endpoints/xyo-is-spent-endpoint'
 
 class DebugPlugin implements IXyoPlugin {
@@ -9,7 +9,9 @@ class DebugPlugin implements IXyoPlugin {
   }
 
   public getProvides(): string[] {
-    return ['DEBUG_BLOCK_GEN']
+    return [
+      XyoPluginProviders.DEBUG_BLOCK_GEN
+    ]
   }
 
   public getPluginDependencies(): string[] {

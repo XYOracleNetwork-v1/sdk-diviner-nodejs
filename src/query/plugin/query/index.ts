@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
 import { XyoQuery } from '../../xyo-query'
 import { XyoChainScanEndpoint } from './xyo-scan-resolver'
 import { intersectionFilter } from '../../filters/intersection'
@@ -14,7 +14,9 @@ class XyoChainScanPlugin implements IXyoPlugin {
   }
 
   public getProvides(): string[] {
-    return ['QUERY']
+    return [
+      XyoPluginProviders.QUERY
+    ]
   }
 
   public getPluginDependencies(): string[] {

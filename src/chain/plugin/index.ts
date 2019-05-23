@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
 import { IXyoOriginBlockGetter, IXyoBlockByPublicKeyRepository } from '@xyo-network/sdk-core-nodejs'
 import { XyoPublicKeyTracer } from '../xyo-public-key-tracer'
 import { XyoHashTracer } from '../xyo-hash-tracer'
@@ -15,14 +15,14 @@ class XyoChainTracerPlugin implements IXyoPlugin {
 
   public getProvides(): string[] {
     return [
-      'CHAIN_TRACER'
+      XyoPluginProviders.CHAIN_TRACER
     ]
   }
 
   public getPluginDependencies(): string[] {
     return [
-      'BLOCK_REPOSITORY_GET',
-      'BLOCK_REPOSITORY_PUBLIC_KEY'
+      XyoPluginProviders.BLOCK_REPOSITORY_GET,
+      XyoPluginProviders.BLOCK_REPOSITORY_PUBLIC_KEY,
     ]
   }
 

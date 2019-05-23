@@ -1,4 +1,4 @@
-import { IXyoPlugin, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
+import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
 import { XyoEthRedeemEndpoint } from './endpoints/xyo-eth-redeem-credits'
 import { XyoEthPaymentValidator } from '../xyo-eth-payment'
 import { IXyoPaymentStore } from '../..'
@@ -21,7 +21,7 @@ class EthPaymentPlugin implements IXyoPlugin {
 
   public getPluginDependencies(): string[] {
     return [
-      'PAYMENT_STORE'
+      XyoPluginProviders.PAYMENT_STORE
     ]
   }
 
