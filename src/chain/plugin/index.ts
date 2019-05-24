@@ -31,10 +31,10 @@ class XyoChainTracerPlugin implements IXyoPlugin {
     const publicKeyRepo = delegate.deps.BLOCK_REPOSITORY_PUBLIC_KEY as IXyoBlockByPublicKeyRepository
     const hashTracer = new XyoHashTracer(blockRepo)
     const tracer = new XyoPublicKeyTracer(hashTracer, publicKeyRepo)
-    const graphqlEndpoint = new XyoChainTracerEndpoint(tracer)
+    // const graphqlEndpoint = new XyoChainTracerEndpoint(tracer)
 
-    delegate.graphql.addQuery(XyoChainTracerEndpoint.query)
-    delegate.graphql.addResolver(XyoChainTracerEndpoint.queryName, graphqlEndpoint)
+    // delegate.graphql.addQuery(XyoChainTracerEndpoint.query)
+    // delegate.graphql.addResolver(XyoChainTracerEndpoint.queryName, graphqlEndpoint)
 
     this.CHAIN_TRACER = tracer
 
