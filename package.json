@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-diviner-nodejs",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "description": "XYO Diviner SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -36,6 +36,7 @@
     "dist/query/plugin/query/index.js",
     "dist/query/plugin/query-chain-tracer/index.js",
     "dist/query/plugin/query-geohash/index.js",
+    "dist/query/plugin/query-page/index.js",
     "dist/debug/plugin/index.js"
   ],
   "devDependencies": {

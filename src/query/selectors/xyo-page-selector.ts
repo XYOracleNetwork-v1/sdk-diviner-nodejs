@@ -1,6 +1,5 @@
 import { IXyoSelector, IXyoSelecterCreator } from '..'
 import bs58 from 'bs58'
-import { IXyoChainTracer } from '../../chain'
 import { IXyoOriginBlockGetter } from '@xyo-network/sdk-core-nodejs'
 
 export interface IXyoPageConfig {
