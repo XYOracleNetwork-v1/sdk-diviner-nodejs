@@ -8,6 +8,7 @@ interface IXyoQueryAuthConfig {
 export class XyoQueryAuth implements IXyoAuth {
   public name = 'xyo-query-auth'
   private store: IXyoPaymentStore
+  private freeLimit = 100
 
   constructor(store: IXyoPaymentStore) {
     this.store = store
@@ -24,10 +25,24 @@ export class XyoQueryAuth implements IXyoAuth {
     const canSpend = (await this.store.getCreditsForKey(authConfig.apiKey) || 0)
 
     if (canSpend < 1) {
-      throw new Error('Out of credits')
+      this.checkIfExceedFreeLimit(config)
     }
 
     return true
+  }
+
+  private checkIfExceedFreeLimit (config: any) {
+    if (config.select) {
+      if (config.select.config) {
+        if (config.select.config.limit && config.select.config.limit > this.freeLimit) {
+          throw new Error('Out of credits')
+        }
+
+        if (config.select.config.amount && config.select.config.amount > this.freeLimit) {
+          throw new Error('Out of credits')
+        }
+      }
+    }
   }
 
 }

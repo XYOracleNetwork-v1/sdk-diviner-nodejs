@@ -50,7 +50,6 @@ export class XyoPublicKeyTracer implements IXyoChainTracer {
         }
 
         if (!up) {
-          console.log('here')
           const hash = new XyoBoundWitness(blocks[blocks.length - 1]).getHash(new XyoSha256()).getAll().getContentsCopy()
           const blockBelow = await this.hashTracer.getBlocksDown(hash, 1, publicKeyCursor)
 

@@ -2,6 +2,7 @@ import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders
 import { XyoQuery } from '../../xyo-query'
 import { createPageSelector } from '../../selectors/xyo-page-selector'
 import { createHashSelector } from '../../selectors/xyo-hash-selector'
+import { IXyoOriginBlockGetter } from '@xyo-network/sdk-core-nodejs'
 
 class XyoPageQuery implements IXyoPlugin {
   public getName(): string {
