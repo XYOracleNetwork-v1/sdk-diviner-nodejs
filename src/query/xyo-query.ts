@@ -1,15 +1,12 @@
 import { IXyoSelecterCreator, IXyoFilterCreator, IXyoMutatorCreater, IXyoQuery, IXyoConfig, IXyoAuth } from '.'
+import { XyoMultiplexedQueryAuth } from './auth/xyo-query-auth-multiplex'
 
 export class XyoQuery {
-  public auth?: IXyoAuth
+  public auth = new XyoMultiplexedQueryAuth()
   private selectorCreators: Map<string, IXyoSelecterCreator> = new Map()
   private filterCreators: Map<string, IXyoFilterCreator> = new Map()
   private mutatorCreators: Map<string, IXyoMutatorCreater> = new Map()
   private finishNotifiers: Map<string, (query: IXyoQuery, blocks: Buffer[]) => void> = new Map()
-
-  constructor(auth?: IXyoAuth) {
-    this.auth = auth
-  }
 
   public addSelector (selector: IXyoSelecterCreator) {
     this.selectorCreators.set(selector.name, selector)

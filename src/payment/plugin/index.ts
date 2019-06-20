@@ -27,7 +27,7 @@ class QueryPaymentPlugin implements IXyoPlugin {
     const creditEndpoint = new XyoCreditEndpoint(store)
     const spendEndpoint = new XyoSpendEndpoint(store)
     const scan = delegate.deps.QUERY as XyoQuery
-    scan.auth = new XyoQueryAuth(store)
+    scan.auth.authProviders.payment = new XyoQueryAuth(store)
 
     delegate.graphql.addQuery(XyoCreditEndpoint.query)
     delegate.graphql.addResolver(XyoCreditEndpoint.queryName, creditEndpoint)
