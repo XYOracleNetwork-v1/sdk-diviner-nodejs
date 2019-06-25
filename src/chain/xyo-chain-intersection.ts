@@ -10,34 +10,39 @@ export class XyoChainIntersection {
   }
 
   public async getLastIntersection (on: Buffer, withKeys: Buffer[], startingIndex: number): Promise<Buffer | undefined> {
-    const results = await this.tracer.traceChain(on, 100, startingIndex, startingIndex !== -1)
+    const found = false
+    let index = startingIndex
 
-    // we have reached the end of the known chain
-    if (results.length === 0) {
-      return undefined
+    while (!found) {
+      const results = await this.tracer.traceChain(on, 100, index, index !== -1)
+
+        // we have reached the end of the known chain
+      if (results.length === 0) {
+        return undefined
+      }
+
+      const keysAsString = withKeys.map((key: Buffer) => {
+        return bs58.encode(key)
+      })
+
+      const filer = intersectionFilter.create({ with: keysAsString }, new Map())
+      const blocksWithIntersection = await filer.filter(results)
+
+        // we have found an intersection
+      if (blocksWithIntersection.length > 0) {
+
+        // return the first intersection
+        return blocksWithIntersection[0]
+      }
+
+      const nextIndex = index - 100
+
+        // we have reached the end of their chain
+      if (nextIndex < 0) {
+        return undefined
+      }
+
+      index = nextIndex
     }
-
-    const keysAsString = withKeys.map((key: Buffer) => {
-      return bs58.encode(key)
-    })
-
-    const filer = intersectionFilter.create({ with: keysAsString }, new Map())
-    const blocksWithIntersection = await filer.filter(results)
-
-    // we have found an intersection
-    if (blocksWithIntersection.length > 0) {
-
-      // return the first intersection
-      return blocksWithIntersection[0]
-    }
-
-    const nextIndex = startingIndex - 100
-
-    // we have reached the end of their chain
-    if (nextIndex < 0) {
-      return undefined
-    }
-
-    return this.getLastIntersection(on, withKeys, nextIndex)
   }
 }
