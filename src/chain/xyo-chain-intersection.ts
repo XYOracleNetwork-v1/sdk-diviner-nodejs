@@ -53,7 +53,6 @@ export class XyoChainIntersection {
 
   private async getLastIndex (publicKey: Buffer) {
     const latestBlocks = await this.tracer.traceChain(publicKey, 1, -1, false)
-    console.log(latestBlocks)
 
     if (latestBlocks.length !== 1) {
       return 100
