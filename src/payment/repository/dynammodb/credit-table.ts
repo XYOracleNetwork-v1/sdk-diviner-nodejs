@@ -75,7 +75,7 @@ export class CreditTable extends Table {
             reject(err)
           }
 
-          if (data.Item && data.Item.Credits.N) {
+          if (data && data.Item && data.Item.Credits.N) {
             resolve(parseFloat(data.Item.Credits.N))
           }
           resolve(undefined)

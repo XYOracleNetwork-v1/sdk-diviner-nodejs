@@ -17,7 +17,12 @@ export class XyoQueryAuth implements IXyoAuth {
   public async didComplete(config: any): Promise<void> {
     const authConfig = config.payment as IXyoQueryAuthConfig
 
-    const constAmount = (await this.store.getCreditsForKey(authConfig.apiKey) || 0)
+    let constAmount = (await this.store.getCreditsForKey(authConfig.apiKey) || 0)
+
+    if (constAmount <= 1) {
+      constAmount = 1
+    }
+
     await this.store.setCreditsForKey(authConfig.apiKey, constAmount - 1)
   }
 

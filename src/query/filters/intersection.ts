@@ -18,7 +18,7 @@ class IntersectionCondition implements IXyoFilter {
     return from.filter(boundWitness => this.didIntersect(boundWitness))
   }
 
-  private didIntersect (boundWitness: Buffer): boolean {
+  public didIntersect (boundWitness: Buffer): boolean {
     const founds: boolean[] = new Array(this.config.with.length)
     const publicKeys = new XyoBoundWitness(boundWitness).getPublicKeys()
 
