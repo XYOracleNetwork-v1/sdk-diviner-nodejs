@@ -1,4 +1,5 @@
 import { IXyoChainTracer } from './xyo-chain-tracer'
+import { XyoBoundWitness, XyoBoundWitnessOriginGetter } from '@xyo-network/sdk-core-nodejs'
 import { intersectionFilter } from '../query/filters/intersection'
 import bs58 from 'bs58'
 
@@ -13,8 +14,12 @@ export class XyoChainIntersection {
     const found = false
     let index = startingIndex
 
+    if (startingIndex === -1) {
+      index = await this.getLastIndex(on)
+    }
+
     while (!found) {
-      const results = await this.tracer.traceChain(on, 100, index, index !== -1)
+      const results = await this.tracer.traceChain(on, 100, index, false)
 
         // we have reached the end of the known chain
       if (results.length === 0) {
@@ -44,5 +49,27 @@ export class XyoChainIntersection {
 
       index = nextIndex
     }
+  }
+
+  private async getLastIndex (publicKey: Buffer) {
+    const latestBlocks = await this.tracer.traceChain(publicKey, 1, -1, false)
+    console.log(latestBlocks)
+
+    if (latestBlocks.length !== 1) {
+      return 100
+    }
+
+    const block = new XyoBoundWitness(latestBlocks[0])
+    const keys = block.getPublicKeys()
+
+    for (let i = 0; i < keys.length; i++) {
+      for (const key of keys[i]) {
+        if (key.getAll().getContentsCopy().equals(publicKey)) {
+          return XyoBoundWitnessOriginGetter.getOriginInformation(block)[i].index
+        }
+      }
+    }
+
+    return 100
   }
 }
