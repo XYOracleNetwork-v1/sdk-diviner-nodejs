@@ -6,12 +6,6 @@ export interface IXyoRewardRepository {
   increment (who: string, by: number): Promise<void>
 }
 
-export const subRepo: IXyoRewardRepository = {
-  increment: async (who: string, by: number) => {
-    console.log(who, by)
-  }
-}
-
 export class XyoSplitReward implements IXyoAfterWare {
   private repository: IXyoRewardRepository
 

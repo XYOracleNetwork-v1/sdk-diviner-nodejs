@@ -1,9 +1,9 @@
 import { IXyoSelecterCreator, IXyoFilterCreator, IXyoMutatorCreater, IXyoQuery, IXyoConfig, IXyoAfterWare } from '.'
 import { XyoMultiplexedQueryAuth } from './auth/xyo-query-auth-multiplex'
-import { XyoSplitReward, subRepo } from '../rewards/xyo-split-reward'
+import { XyoSplitReward } from '../rewards/xyo-split-reward'
 
 export class XyoQuery {
-  public after: IXyoAfterWare | undefined = new XyoSplitReward(subRepo)
+  public after: IXyoAfterWare | undefined
   public auth = new XyoMultiplexedQueryAuth()
   private selectorCreators: Map<string, IXyoSelecterCreator> = new Map()
   private filterCreators: Map<string, IXyoFilterCreator> = new Map()
