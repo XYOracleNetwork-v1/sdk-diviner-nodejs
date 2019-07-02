@@ -15,7 +15,7 @@ export class XyoMultiplexedQueryAuth implements IXyoAuth {
       }
     }
 
-    return false
+    throw new Error('auth not found')
   }
 
   public async didComplete(config: any): Promise<void> {

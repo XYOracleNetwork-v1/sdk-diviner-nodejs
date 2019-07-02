@@ -48,3 +48,7 @@ export interface IChainScanCondition {
   name: string,
   pipe: (boundWitness: Buffer) => any
 }
+
+export interface IXyoAfterWare {
+  after (from: Buffer[]): Promise<any>
+}
