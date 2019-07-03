@@ -9,6 +9,7 @@ export class XyoQueryAuth implements IXyoAuth {
   public name = 'xyo-query-auth'
   private store: IXyoPaymentStore
   private freeLimit = 100
+  private maxLimit = 5001
 
   constructor(store: IXyoPaymentStore) {
     this.store = store
@@ -47,6 +48,14 @@ export class XyoQueryAuth implements IXyoAuth {
 
         if (config.select.config.amount && config.select.config.amount > this.freeLimit) {
           throw new Error('Out of credits')
+        }
+
+        if (config.select.config.limit && config.select.config.limit > this.maxLimit) {
+          throw new Error('Reached max limit of 5000')
+        }
+
+        if (config.select.config.amount && config.select.config.amount > this.maxLimit) {
+          throw new Error('Reached max limit of 5000')
         }
       }
     }
