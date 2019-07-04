@@ -34,9 +34,25 @@ export class XyoQueryAuth implements IXyoAuth {
 
     if (canSpend < 1) {
       this.checkIfExceedFreeLimit(config)
+    } else {
+      this.checkIfExceedLimit(config)
     }
 
     return true
+  }
+
+  private checkIfExceedLimit (config: any) {
+    if (config.select) {
+      if (config.select.config) {
+        if (config.select.config.limit && config.select.config.limit > this.maxLimit) {
+          throw new Error('Reached max limit of 5000')
+        }
+
+        if (config.select.config.amount && config.select.config.amount > this.maxLimit) {
+          throw new Error('Reached max limit of 5000')
+        }
+      }
+    }
   }
 
   private checkIfExceedFreeLimit (config: any) {
@@ -48,14 +64,6 @@ export class XyoQueryAuth implements IXyoAuth {
 
         if (config.select.config.amount && config.select.config.amount > this.freeLimit) {
           throw new Error('Out of credits')
-        }
-
-        if (config.select.config.limit && config.select.config.limit > this.maxLimit) {
-          throw new Error('Reached max limit of 5000')
-        }
-
-        if (config.select.config.amount && config.select.config.amount > this.maxLimit) {
-          throw new Error('Reached max limit of 5000')
         }
       }
     }
