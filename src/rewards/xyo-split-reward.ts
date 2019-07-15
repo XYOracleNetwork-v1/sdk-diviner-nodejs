@@ -1,4 +1,4 @@
-import { IXyoAfterWare } from '../query'
+import { IXyoAfterWare, IXyoQuery } from '../query'
 import { XyoBoundWitness, XyoStructure } from '@xyo-network/sdk-core-nodejs'
 import bs58 from 'bs58'
 
@@ -13,7 +13,11 @@ export class XyoSplitReward implements IXyoAfterWare {
     this.repository = repository
   }
 
-  public async after(from: Buffer[]): Promise<any> {
+  public async after(from: Buffer[], config: IXyoQuery): Promise<any> {
+    if (!config.shouldReward) {
+      return
+    }
+
     const allKeys = this.getAllPublicKeys(from)
 
     const amountPerParty = 1 / allKeys.length

@@ -29,7 +29,7 @@ export interface IXyoMutatorCreater {
 
 export interface IXyoAuth {
   name: string,
-  auth (config: any): Promise<boolean>
+  auth (config: any): Promise<{auth: boolean, shouldReward: boolean}>
   didComplete (config: any): Promise<void>
 }
 
@@ -38,6 +38,7 @@ export interface IXyoMutator {
 }
 
 export interface IXyoQuery {
+  shouldReward?: boolean
   payment?: IXyoConfig,
   select: IXyoConfig,
   filter?: IXyoConfig,
@@ -50,5 +51,5 @@ export interface IChainScanCondition {
 }
 
 export interface IXyoAfterWare {
-  after (from: Buffer[]): Promise<any>
+  after (from: Buffer[], config: IXyoQuery): Promise<any>
 }

@@ -4,7 +4,7 @@ export class XyoMultiplexedQueryAuth implements IXyoAuth {
   public name = 'xyo-multiplex-auth'
   public authProviders: {[key: string]: IXyoAuth} = {}
 
-  public async auth(config: any): Promise<boolean> {
+  public async auth(config: any): Promise<{auth: boolean, shouldReward: boolean}> {
     const keys = Object.keys(config)
 
     for (const key of keys) {

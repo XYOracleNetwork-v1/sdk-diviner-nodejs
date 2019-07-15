@@ -38,16 +38,16 @@ export class FirestoreCoinAuth implements IXyoAuth {
     throw new Error('No user font to spend tokens')
   }
 
-  public async auth(config: any): Promise<boolean> {
+  public async auth(config: any): Promise<{auth: boolean, shouldReward: boolean}>  {
     const authConfig = config.coin as IFirestoreCoinAuthConfig
     const userId = await this.getUserIdFromFirebaseToken(authConfig.token)
 
     if (userId) {
       const canSpend = (await this.store.getCreditsForKey(userId) || 0)
-      return canSpend > 1
+      return { auth: canSpend > 1, shouldReward: canSpend > 1 }
     }
 
-    return false
+    return { auth: false, shouldReward: false }
 
   }
 

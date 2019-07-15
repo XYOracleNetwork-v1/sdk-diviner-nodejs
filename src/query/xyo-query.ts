@@ -46,7 +46,9 @@ export class XyoQuery {
 
   public async queryFor(query: IXyoQuery): Promise < any > {
     if (this .auth) {
-      await this.auth.auth(query)
+      const auth = await this.auth.auth(query)
+
+      query.shouldReward = auth.shouldReward
     }
 
     let blocks: Buffer[] = await this.selectBlocks(query.select) || []
@@ -56,7 +58,7 @@ export class XyoQuery {
     }
 
     if (this.after) {
-      this.after.after(blocks)
+      this.after.after(blocks, query)
     }
 
     if (query.filter) {

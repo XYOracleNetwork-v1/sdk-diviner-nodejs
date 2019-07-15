@@ -27,18 +27,21 @@ export class XyoQueryAuth implements IXyoAuth {
     await this.store.setCreditsForKey(authConfig.apiKey, constAmount - 1)
   }
 
-  public async auth(config: any): Promise<boolean> {
+  public async auth(config: any): Promise<{auth: boolean, shouldReward: boolean}> {
     const authConfig = config.payment as IXyoQueryAuthConfig
 
     const canSpend = (await this.store.getCreditsForKey(authConfig.apiKey) || 0)
+    let shouldReward = false
 
     if (canSpend < 1) {
       this.checkIfExceedFreeLimit(config)
+      shouldReward = false
     } else {
       this.checkIfExceedLimit(config)
+      shouldReward = true
     }
 
-    return true
+    return { shouldReward, auth: true }
   }
 
   private checkIfExceedLimit (config: any) {
