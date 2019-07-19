@@ -43,7 +43,6 @@
     "dist/debug/plugin/index.js"
   ],
   "devDependencies": {
-    "@types/bs58": "^4.0.0",
     "@types/ethereumjs-abi": "^0.6.3",
     "@types/ethereumjs-tx": "^1.0.1",
     "@types/graphql": "^14.2.0",
