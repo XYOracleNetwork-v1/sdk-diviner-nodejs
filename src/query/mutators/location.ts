@@ -4,11 +4,11 @@ import { IXyoMutator, IXyoMutatorCreater } from '..'
 
 class LocationMutator implements IXyoMutator {
 
-  public async mutate (from: Buffer[]): Promise<any> {
+  public async mutate(from: Buffer[]): Promise<any> {
     return from.map(block => this.getLocation(block))
   }
 
-  private getLocation (boundWitness: Buffer): any {
+  private getLocation(boundWitness: Buffer): any {
     const block = new XyoBoundWitness(boundWitness)
 
     for (const set of block.getHeuristics()) {

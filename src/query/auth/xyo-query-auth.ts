@@ -44,7 +44,7 @@ export class XyoQueryAuth implements IXyoAuth {
     return { shouldReward, auth: true }
   }
 
-  private checkIfExceedLimit (config: any) {
+  private checkIfExceedLimit(config: any) {
     if (config.select) {
       if (config.select.config) {
         if (config.select.config.limit && config.select.config.limit > this.maxLimit) {
@@ -58,7 +58,7 @@ export class XyoQueryAuth implements IXyoAuth {
     }
   }
 
-  private checkIfExceedFreeLimit (config: any) {
+  private checkIfExceedFreeLimit(config: any) {
     if (config.select) {
       if (config.select.config) {
         if (config.select.config.limit && config.select.config.limit > this.freeLimit) {

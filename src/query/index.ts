@@ -10,7 +10,7 @@ export interface IXyoSelecterCreator {
 }
 
 export interface IXyoSelector {
-  select (): Promise<Buffer[]>
+  select(): Promise<{result: Buffer[], meta: any}>
 }
 
 export interface IXyoFilterCreator {
@@ -19,7 +19,7 @@ export interface IXyoFilterCreator {
 }
 
 export interface IXyoFilter {
-  filter (from: Buffer[]): Promise<Buffer[]>
+  filter(from: Buffer[]): Promise<Buffer[]>
 }
 
 export interface IXyoMutatorCreater {
@@ -29,12 +29,12 @@ export interface IXyoMutatorCreater {
 
 export interface IXyoAuth {
   name: string,
-  auth (config: any): Promise<{auth: boolean, shouldReward: boolean}>
-  didComplete (config: any): Promise<void>
+  auth(config: any): Promise<{auth: boolean, shouldReward: boolean}>
+  didComplete(config: any): Promise<void>
 }
 
 export interface IXyoMutator {
-  mutate (from: Buffer[]): Promise<any>
+  mutate(from: Buffer[], meta?: any, others?: Map<string, IXyoMutatorCreater>): Promise<any>
 }
 
 export interface IXyoQuery {
@@ -51,5 +51,5 @@ export interface IChainScanCondition {
 }
 
 export interface IXyoAfterWare {
-  after (from: Buffer[], config: IXyoQuery): Promise<any>
+  after(from: Buffer[], config: IXyoQuery): Promise<any>
 }

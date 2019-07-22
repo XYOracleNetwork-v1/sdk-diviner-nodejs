@@ -16,10 +16,13 @@ class XyoPageSelector implements IXyoSelector {
     this.getter = getter
   }
 
-  public async select (): Promise<Buffer[]> {
+  public async select(): Promise<{result: Buffer[], meta: any}> {
     const offsetHash =  this.config.cursor && bs58.decode(this.config.cursor) || undefined
     const blocks = await this.getter.getOriginBlocks(this.config.limit, offsetHash)
-    return blocks.items
+    return {
+      meta: {},
+      result: blocks.items
+    }
   }
 }
 

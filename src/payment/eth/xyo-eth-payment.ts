@@ -13,7 +13,7 @@ export class XyoEthPaymentValidator {
     this.paymentStore = paymentStore
   }
 
-  public async redeem (txHash: string, from: string, to: string, signature: string, privateApiKey: string, erc20ToCreditRatio: number): Promise<boolean> {
+  public async redeem(txHash: string, from: string, to: string, signature: string, privateApiKey: string, erc20ToCreditRatio: number): Promise<boolean> {
 
     const expectedAddress = (ethSigUtil as any).recoverTypedSignature({
       data: [{
@@ -38,7 +38,7 @@ export class XyoEthPaymentValidator {
     return false
   }
 
-  public async getAmountInTransaction (txHash: string, fromEth: string, toEth: string): Promise<number | undefined> {
+  public async getAmountInTransaction(txHash: string, fromEth: string, toEth: string): Promise<number | undefined> {
     return new Promise((resolve, reject) => {
       this.web3.eth.getTransactionReceipt(txHash, (err, transaction) => {
         if (transaction.from !== fromEth) {

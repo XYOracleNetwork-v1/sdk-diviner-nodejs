@@ -10,11 +10,11 @@ export class FirestoreCoinAuth implements IXyoAuth {
   public name = 'firestore-coin-auth'
   private store: XyoCoinAuth
 
-  constructor (store: XyoCoinAuth) {
+  constructor(store: XyoCoinAuth) {
     this.store = store
   }
 
-  public async getCredits (token: string): Promise<number> {
+  public async getCredits(token: string): Promise<number> {
     const userId = await this.getUserIdFromFirebaseToken(token)
 
     if (!userId) {
@@ -51,7 +51,7 @@ export class FirestoreCoinAuth implements IXyoAuth {
 
   }
 
-  private async getUserIdFromFirebaseToken (token: string): Promise<string | undefined> {
+  private async getUserIdFromFirebaseToken(token: string): Promise<string | undefined> {
     const decodedToken = await firebaseAdmin.auth().verifyIdToken(token)
     return decodedToken.uid
   }

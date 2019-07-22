@@ -76,7 +76,7 @@ export class XyoPublicKeyTracer implements IXyoChainTracer {
     return blocks
   }
 
-  private getPreviousPublicKeyOfPartyFromUpperNextPublicKey (boundWitnessBytes: Buffer, publicKey: Buffer): Buffer | undefined {
+  private getPreviousPublicKeyOfPartyFromUpperNextPublicKey(boundWitnessBytes: Buffer, publicKey: Buffer): Buffer | undefined {
     const boundWitness = new XyoBoundWitness(boundWitnessBytes)
     const publicKeys = boundWitness.getPublicKeys()
     const origins = XyoBoundWitnessOriginGetter.getOriginInformation(boundWitness)
@@ -96,7 +96,7 @@ export class XyoPublicKeyTracer implements IXyoChainTracer {
     return undefined
   }
 
-  private getPublicKeyOfNextSegment (boundWitnessBytes: Buffer, publicKeysOfParty: Buffer[]): Buffer | undefined {
+  private getPublicKeyOfNextSegment(boundWitnessBytes: Buffer, publicKeysOfParty: Buffer[]): Buffer | undefined {
     const boundWitness = new XyoBoundWitness(boundWitnessBytes)
     const publicKeys = boundWitness.getPublicKeys()
     const origins = XyoBoundWitnessOriginGetter.getOriginInformation(boundWitness)

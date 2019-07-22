@@ -10,15 +10,15 @@ class IntersectionCondition implements IXyoFilter {
 
   private config: IItersectionConditionConfig
 
-  constructor (config: IItersectionConditionConfig) {
+  constructor(config: IItersectionConditionConfig) {
     this.config = config
   }
 
-  public async filter (from: Buffer[]): Promise<Buffer[]>  {
+  public async filter(from: Buffer[]): Promise<Buffer[]>  {
     return from.filter(boundWitness => this.didIntersect(boundWitness))
   }
 
-  public didIntersect (boundWitness: Buffer): boolean {
+  public didIntersect(boundWitness: Buffer): boolean {
     const founds: boolean[] = new Array(this.config.with.length)
     const publicKeys = new XyoBoundWitness(boundWitness).getPublicKeys()
 

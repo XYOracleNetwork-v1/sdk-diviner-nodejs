@@ -15,8 +15,11 @@ class GeohashSelector implements IXyoSelector {
     this.repo = geohash
   }
 
-  public select (): Promise<Buffer[]> {
-    return this.repo.getOriginBlocksByGeohash(this.config.geohash, this.config.limit)
+  public async select(): Promise<{result: Buffer[], meta: any}> {
+    return {
+      meta: {},
+      result: await this.repo.getOriginBlocksByGeohash(this.config.geohash, this.config.limit),
+    }
   }
 }
 

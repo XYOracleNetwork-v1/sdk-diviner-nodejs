@@ -3,11 +3,11 @@ import { IXyoOriginBlockGetter, XyoBoundWitness, XyoBoundWitnessOriginGetter, IX
 export class XyoHashTracer {
   private blockGetter: IXyoOriginBlockGetter
 
-  constructor (blockGetter: IXyoOriginBlockGetter) {
+  constructor(blockGetter: IXyoOriginBlockGetter) {
     this.blockGetter = blockGetter
   }
 
-  public async getBlocksDown (hash: Buffer, n: number, publicKey: Buffer): Promise<Buffer[]> {
+  public async getBlocksDown(hash: Buffer, n: number, publicKey: Buffer): Promise<Buffer[]> {
     let lookingPublicKeys = [publicKey]
     let offset: Buffer = hash
     const blocks: Buffer[] = []
@@ -36,7 +36,7 @@ export class XyoHashTracer {
     return blocks
   }
 
-  private getBlockPreviousHash (publicKeysOfParent: Buffer[], boundWitnessBytes: Buffer): {origin: IXyoBoundWitnessOrigin, publicKeys: Buffer[]} | undefined {
+  private getBlockPreviousHash(publicKeysOfParent: Buffer[], boundWitnessBytes: Buffer): {origin: IXyoBoundWitnessOrigin, publicKeys: Buffer[]} | undefined {
     const boundWitness = new XyoBoundWitness(boundWitnessBytes)
     const publicKeys = boundWitness.getPublicKeys()
     const origins = XyoBoundWitnessOriginGetter.getOriginInformation(boundWitness)

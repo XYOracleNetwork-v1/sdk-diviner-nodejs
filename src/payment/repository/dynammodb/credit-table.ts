@@ -31,7 +31,7 @@ export class CreditTable extends Table {
     }
   }
 
-  public async putItem (key: string, bal: number): Promise<void> {
+  public async putItem(key: string, bal: number): Promise<void> {
     return new Promise<void>((resolve: any, reject: any) => {
       try {
         const params: DynamoDB.Types.PutItemInput = {
@@ -58,7 +58,7 @@ export class CreditTable extends Table {
     })
   }
 
-  public async getBalance (key: string): Promise<number | undefined> {
+  public async getBalance(key: string): Promise<number | undefined> {
     return new Promise<number | undefined>((resolve: any, reject: any) => {
       try {
         const params: DynamoDB.Types.GetItemInput = {

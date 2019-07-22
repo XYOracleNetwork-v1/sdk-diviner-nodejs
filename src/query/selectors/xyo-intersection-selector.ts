@@ -18,7 +18,7 @@ class XyoIntersectionSelector implements IXyoSelector {
     this.tracer = tracer
   }
 
-  public async select (): Promise<Buffer[]> {
+  public async select(): Promise<{result: Buffer[], meta: any}> {
     const bytePublicKey = bs58.decode(this.config.publicKey)
 
     const bytePublicKeys = this.config.with.map((key: string) => {
@@ -28,10 +28,16 @@ class XyoIntersectionSelector implements IXyoSelector {
     const block = await this.tracer.getLastIntersection(bytePublicKey, bytePublicKeys, this.config.index)
 
     if (block) {
-      return [block]
+      return {
+        meta: {},
+        result: [block],
+      }
     }
 
-    return []
+    return {
+      meta: {},
+      result: [],
+    }
   }
 }
 

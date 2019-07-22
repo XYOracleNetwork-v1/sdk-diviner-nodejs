@@ -18,10 +18,13 @@ class XyoIndexSelector implements IXyoSelector {
     this.tracer = tracer
   }
 
-  public async select (): Promise<Buffer[]> {
+  public async select(): Promise<{result: Buffer[], meta: any}> {
     const bytePublicKey = bs58.decode(this.config.publicKey)
     const blocks = await this.tracer.traceChain(bytePublicKey, this.config.amount, this.config.index, this.config.up)
-    return blocks
+    return {
+      meta: {},
+      result: blocks,
+    }
   }
 }
 

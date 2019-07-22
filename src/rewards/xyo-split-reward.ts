@@ -3,13 +3,14 @@ import { XyoBoundWitness, XyoStructure } from '@xyo-network/sdk-core-nodejs'
 import bs58 from 'bs58'
 
 export interface IXyoRewardRepository {
-  increment (who: string, by: number): Promise<void>
+  increment(who: string, by: number): Promise<void>
+  get(who: string): Promise<number>
 }
 
 export class XyoSplitReward implements IXyoAfterWare {
   private repository: IXyoRewardRepository
 
-  constructor (repository: IXyoRewardRepository) {
+  constructor(repository: IXyoRewardRepository) {
     this.repository = repository
   }
 
@@ -32,7 +33,7 @@ export class XyoSplitReward implements IXyoAfterWare {
     }
   }
 
-  private getAllPublicKeys (from: Buffer[]): Buffer[][] {
+  private getAllPublicKeys(from: Buffer[]): Buffer[][] {
     const keys: XyoStructure[][] = []
 
     for (const bytes of from) {

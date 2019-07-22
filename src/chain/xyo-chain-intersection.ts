@@ -10,7 +10,7 @@ export class XyoChainIntersection {
     this.tracer = tracer
   }
 
-  public async getLastIntersection (on: Buffer, withKeys: Buffer[], startingIndex: number): Promise<Buffer | undefined> {
+  public async getLastIntersection(on: Buffer, withKeys: Buffer[], startingIndex: number): Promise<Buffer | undefined> {
     const found = false
     let index = startingIndex
 
@@ -51,7 +51,7 @@ export class XyoChainIntersection {
     }
   }
 
-  private async getLastIndex (publicKey: Buffer) {
+  private async getLastIndex(publicKey: Buffer) {
     const latestBlocks = await this.tracer.traceChain(publicKey, 1, -1, false)
 
     if (latestBlocks.length !== 1) {

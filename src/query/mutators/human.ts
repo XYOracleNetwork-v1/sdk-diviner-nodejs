@@ -4,11 +4,11 @@ import bs58 from 'bs58'
 
 class HumanMutator implements IXyoMutator {
 
-  public async mutate (from: Buffer[]): Promise<any> {
+  public async mutate(from: Buffer[]): Promise<any> {
     return from.map(block => this.getLocation(block))
   }
 
-  private getLocation (boundWitness: Buffer): any {
+  private getLocation(boundWitness: Buffer): any {
     const block = new XyoBoundWitness(boundWitness)
     return {
       hash: bs58.encode(block.getHash(new XyoSha256()).getAll().getContentsCopy()),

@@ -5,6 +5,8 @@ import { intersectionFilter } from '../../filters/intersection'
 import { locationMutator } from '../../mutators/location'
 import { humanMutator } from '../../mutators/human'
 import { XyoSupportedResolver } from './xyo-supported-resolver'
+import { metaMutator } from '../../mutators/meta'
+import { multiMutator } from '../../mutators/multi'
 
 class XyoChainScanPlugin implements IXyoPlugin {
   public QUERY: XyoQuery | undefined
@@ -31,6 +33,8 @@ class XyoChainScanPlugin implements IXyoPlugin {
     scanner.addMutator(locationMutator)
     scanner.addFilter(intersectionFilter)
     scanner.addMutator(humanMutator)
+    scanner.addMutator(metaMutator)
+    scanner.addMutator(multiMutator)
 
     delegate.graphql.addQuery(XyoChainScanEndpoint.query)
     delegate.graphql.addResolver(XyoChainScanEndpoint.queryName, endpoint)

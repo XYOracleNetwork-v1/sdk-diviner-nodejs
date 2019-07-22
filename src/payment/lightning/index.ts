@@ -60,7 +60,7 @@ export class XyoLightningPayment extends XyoBase {
     }
   }
 
-  private handler = async (request: Request, reply: ResponseToolkit) => {
+  private handler = async(request: Request, reply: ResponseToolkit) => {
     const status = (request.payload as any).status
     if (status === 'paid') {
       const paymentid = (request.payload as any).id

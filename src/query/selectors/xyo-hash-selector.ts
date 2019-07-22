@@ -15,15 +15,21 @@ class XyoHashSelector implements IXyoSelector {
     this.getter = getter
   }
 
-  public async select (): Promise<Buffer[]> {
+  public async select(): Promise<{result: Buffer[], meta: any}> {
     const offsetHash =  bs58.decode(this.config.hash)
     const block = await this.getter.getOriginBlock(offsetHash)
 
     if (block) {
-      return [block]
+      return {
+        meta: {},
+        result: [block],
+      }
     }
 
-    return []
+    return {
+      meta: {},
+      result: [],
+    }
   }
 }
 

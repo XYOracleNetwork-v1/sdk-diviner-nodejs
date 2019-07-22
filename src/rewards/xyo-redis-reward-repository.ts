@@ -9,6 +9,13 @@ export class XyoRewardRepository implements IXyoRewardRepository {
       host: endpoint
     })
   }
+  public async get(who: string): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.client.zscore('rewards', who, (error, n) => {
+        resolve(parseFloat(n || '0'))
+      })
+    })
+  }
 
   public increment(who: string, by: number): Promise<void> {
     return new Promise((resolve, reject) => {

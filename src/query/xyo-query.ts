@@ -1,6 +1,5 @@
 import { IXyoSelecterCreator, IXyoFilterCreator, IXyoMutatorCreater, IXyoQuery, IXyoConfig, IXyoAfterWare } from '.'
 import { XyoMultiplexedQueryAuth } from './auth/xyo-query-auth-multiplex'
-import { XyoSplitReward } from '../rewards/xyo-split-reward'
 
 export class XyoQuery {
   public after: IXyoAfterWare | undefined
@@ -10,23 +9,23 @@ export class XyoQuery {
   private mutatorCreators: Map<string, IXyoMutatorCreater> = new Map()
   private finishNotifiers: Map<string, (query: IXyoQuery, blocks: Buffer[]) => void> = new Map()
 
-  public addSelector (selector: IXyoSelecterCreator) {
+  public addSelector(selector: IXyoSelecterCreator) {
     this.selectorCreators.set(selector.name, selector)
   }
 
-  public addFilter (filter: IXyoFilterCreator) {
+  public addFilter(filter: IXyoFilterCreator) {
     this.filterCreators.set(filter.name, filter)
   }
 
-  public addMutator (mutator: IXyoMutatorCreater) {
+  public addMutator(mutator: IXyoMutatorCreater) {
     this.mutatorCreators.set(mutator.name, mutator)
   }
 
-  public addFinishNotify (name: string, notify: (query: IXyoQuery, blocks: Buffer[]) => void) {
+  public addFinishNotify(name: string, notify: (query: IXyoQuery, blocks: Buffer[]) => void) {
     this.finishNotifiers.set(name, notify)
   }
 
-  public getSupported (): string[] {
+  public getSupported(): string[] {
     const supported: string[] = []
 
     for (const [_, value] of this.selectorCreators) {
@@ -51,7 +50,9 @@ export class XyoQuery {
       query.shouldReward = auth.shouldReward
     }
 
-    let blocks: Buffer[] = await this.selectBlocks(query.select) || []
+    const firstQuery = await this.selectBlocks(query.select)
+
+    let blocks: Buffer[] = (firstQuery && firstQuery.result) || []
 
     for (const [_, value] of this.finishNotifiers) {
       value(query, blocks)
@@ -70,7 +71,7 @@ export class XyoQuery {
     }
 
     if (query.mutate) {
-      return this.mutateBlocks(query.mutate, blocks)
+      return this.mutateBlocks(query.mutate, blocks, firstQuery && firstQuery.meta)
     }
 
     return blocks.map((block) => {
@@ -78,12 +79,12 @@ export class XyoQuery {
     })
   }
 
-  private async mutateBlocks(config: IXyoConfig, blocks: Buffer[]): Promise < any > {
+  private async mutateBlocks(config: IXyoConfig, blocks: Buffer[], meta: any): Promise < any > {
     const mutatorCreator = this.mutatorCreators.get(config.name)
 
     if (mutatorCreator) {
       const mutator = mutatorCreator.create(config.config, this.mutatorCreators)
-      return mutator.mutate(blocks)
+      return mutator.mutate(blocks, meta, this.mutatorCreators)
     }
 
     return undefined
@@ -100,7 +101,7 @@ export class XyoQuery {
     return undefined
   }
 
-  private async selectBlocks(config: IXyoConfig): Promise < Buffer[] | undefined > {
+  private async selectBlocks(config: IXyoConfig): Promise < {result: Buffer[], meta: any} | undefined > {
     const selectorCreator = this.selectorCreators.get(config.name)
 
     if (selectorCreator) {

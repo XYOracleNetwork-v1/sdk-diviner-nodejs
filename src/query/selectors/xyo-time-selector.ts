@@ -15,9 +15,14 @@ class XyoTimeSelector implements IXyoSelector {
     this.getter = getter
   }
 
-  public async select (): Promise<Buffer[]> {
+  public async select(): Promise<{result: Buffer[], meta: any}> {
     const blocks = await this.getter.getOriginBlocksByTime(this.config.fromTime, this.config.limit)
-    return blocks.items
+    return {
+      meta: {
+        lastTime: blocks.lastTime,
+      },
+      result: blocks.items,
+    }
   }
 }
 

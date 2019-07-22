@@ -31,7 +31,7 @@ export class SpendTable extends Table {
     }
   }
 
-  public async putItem (key: string): Promise<void> {
+  public async putItem(key: string): Promise<void> {
     return new Promise<void>((resolve: any, reject: any) => {
       try {
         const params: DynamoDB.Types.PutItemInput = {
@@ -55,7 +55,7 @@ export class SpendTable extends Table {
     })
   }
 
-  public async getItem (key: string): Promise<any> {
+  public async getItem(key: string): Promise<any> {
     return new Promise<boolean>((resolve: any, reject: any) => {
       try {
         const params: DynamoDB.Types.GetItemInput = {
