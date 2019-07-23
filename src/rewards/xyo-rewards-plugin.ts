@@ -4,6 +4,7 @@ import { XyoQuery } from '../query/xyo-query'
 import { XyoSplitReward } from './xyo-split-reward'
 import { XyoRewardRepository } from './xyo-redis-reward-repository'
 import { XyoRewardsEndpoint } from './xyo-reqards-endpoint'
+import { XyoTopRewardsEndpoint } from './xyo-top-rewards-endpoint'
 
 class QueryPaymentPlugin implements IXyoPlugin {
 
@@ -26,9 +27,13 @@ class QueryPaymentPlugin implements IXyoPlugin {
     const redis = new XyoRewardRepository('localhost')
     const reward = new XyoSplitReward(redis)
     const endpoint = new XyoRewardsEndpoint(redis)
+    const top = new XyoTopRewardsEndpoint(redis)
 
     delegate.graphql.addQuery(XyoRewardsEndpoint.query)
     delegate.graphql.addResolver(XyoRewardsEndpoint.queryName, endpoint)
+
+    delegate.graphql.addQuery(XyoTopRewardsEndpoint.query)
+    delegate.graphql.addResolver(XyoTopRewardsEndpoint.queryName, top)
 
     scan.after = reward
 
