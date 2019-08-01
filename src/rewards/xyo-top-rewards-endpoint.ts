@@ -1,7 +1,7 @@
 import { IXyoRewardRepository } from './xyo-split-reward'
 
 export interface IGetTopRewards {
-  getTopRewards(): Promise<{[key: string]: float}>
+  getTopRewards(): Promise<{[key: string]: number}>
 }
 
 export class XyoTopRewardsEndpoint {

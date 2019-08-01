@@ -3,6 +3,7 @@ import { IXyoAuth } from '..'
 export class XyoMultiplexedQueryAuth implements IXyoAuth {
   public name = 'xyo-multiplex-auth'
   public authProviders: {[key: string]: IXyoAuth} = {}
+  public alwaysAuth: Array<(config: any, price: number) => void> = []
 
   public async auth(config: any): Promise<{auth: boolean, shouldReward: boolean}> {
     const keys = Object.keys(config)
@@ -11,7 +12,13 @@ export class XyoMultiplexedQueryAuth implements IXyoAuth {
       const authProvider = this.authProviders[key]
 
       if (authProvider) {
-        return authProvider.auth(config)
+        const result = await authProvider.auth(config)
+
+        for (const auth of this.alwaysAuth) {
+          auth(config, result.shouldReward ? 1 : 0)
+        }
+
+        return result
       }
     }
 

@@ -30,6 +30,11 @@ export class XyoChainIntersection {
         return bs58.encode(key)
       })
 
+      results.forEach((bytes) => {
+        const bw = new XyoBoundWitness(bytes)
+        bw.getPublicKeys()
+      })
+
       const filer = intersectionFilter.create({ with: keysAsString }, new Map())
       const blocksWithIntersection = await filer.filter(results)
 
