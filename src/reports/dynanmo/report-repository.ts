@@ -45,23 +45,6 @@ export class QueryReportTable extends Table implements IXyoQueryReportRepository
 
     return new Promise<void>((resolve: any, reject: any) => {
       try {
-        console.log(JSON.stringify({
-          Day: {
-            N: day.toString()
-          },
-          Time: {
-            N: info.time.getTime().toString()
-          },
-          Price: {
-            N: info.price.toString()
-          },
-          Query: {
-            S: JSON.stringify(info.query)
-          },
-          Spender: {
-            S: info.query.spender
-          }
-        }))
         const params: DynamoDB.Types.PutItemInput = {
           Item: {
             Day: {
@@ -77,7 +60,7 @@ export class QueryReportTable extends Table implements IXyoQueryReportRepository
               S: JSON.stringify(info.query)
             },
             Spender: {
-              S: info.query.spender
+              S: info.spender
             }
           },
           TableName: this.tableName

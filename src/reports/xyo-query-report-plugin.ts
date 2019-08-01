@@ -2,6 +2,7 @@ import { IXyoPlugin, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
 import { IXyoQueryReportRepository, IXyoQueryInfo } from './xyo-query-report-repository'
 import { XyoQuery } from '../query/xyo-query'
 import { XyoSha256 } from '@xyo-network/sdk-core-nodejs'
+import { XyoQueryReportEndpoint } from './xyo-query-report-endpoint'
 
 class XyoQueryReportPlugin implements IXyoPlugin {
   public getName(): string {
@@ -20,6 +21,10 @@ class XyoQueryReportPlugin implements IXyoPlugin {
     const repository = delegate.deps.REPORT_REPOSITORY as IXyoQueryReportRepository
     const query = delegate.deps.QUERY as XyoQuery
     const hasher = new XyoSha256()
+
+    delegate.graphql.addType(XyoQueryReportEndpoint.type)
+    delegate.graphql.addQuery(XyoQueryReportEndpoint.query)
+    delegate.graphql.addResolver(XyoQueryReportEndpoint.queryName, new XyoQueryReportEndpoint(repository))
 
     query.auth.alwaysAuth.push((queryConfig, price) => {
       const queryCopy = JSON.parse(JSON.stringify(queryConfig))
