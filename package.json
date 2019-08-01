@@ -40,7 +40,9 @@
     "dist/query/plugin/query-geohash/index.js",
     "dist/query/plugin/query-page/index.js",
     "dist/query/plugin/query-time/index.js",
-    "dist/debug/plugin/index.js"
+    "dist/debug/plugin/index.js",
+    "dist/reports/xyo-query-report-plugin.js",
+    "dist/reports/dynanmo/dynanmo-report-repository-plugin.js"
   ],
   "devDependencies": {
     "@types/ethereumjs-abi": "^0.6.3",
