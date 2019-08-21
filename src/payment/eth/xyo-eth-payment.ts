@@ -41,12 +41,19 @@ export class XyoEthPaymentValidator {
   public async getAmountInTransaction(txHash: string, fromEth: string, toEth: string): Promise<number | undefined> {
     return new Promise((resolve, reject) => {
       this.web3.eth.getTransactionReceipt(txHash, (err, transaction) => {
+        if (!transaction) {
+          reject('transaction is null')
+          return
+        }
+
         if (transaction.from !== fromEth) {
           reject('Invalid from')
+          return
         }
 
         if (transaction.to !== erc2Contract) {
           reject('Invalid contract')
+          return
         }
 
         if (transaction.logs.length > 0) {
@@ -55,10 +62,12 @@ export class XyoEthPaymentValidator {
 
           if (`0x${sendingTokensToWhom.slice(26, 68)}`.toLowerCase() !== toEth.toLowerCase()) {
             reject('Did not send to the right person')
+            return
           }
 
           const xyoSent = this.web3.utils.fromWei(transaction.logs[0].data as string, 'ether')
           resolve(parseFloat(xyoSent))
+          return
         }
 
         reject('no logs')
