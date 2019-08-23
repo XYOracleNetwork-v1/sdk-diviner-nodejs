@@ -12,7 +12,6 @@ install:
 - yarn install
 script:
 - yarn build
-- sonar-scanner
 deploy:
   provider: npm
   skip_cleanup: true
@@ -20,11 +19,5 @@ deploy:
   api_key: $NPM_TOKEN
   on:
     branch: master
-deploy:
-  provider: npm
-  skip_cleanup: true
-  tag: alpha
-  email: $NPM_EMAIL
-  api_key: $NPM_TOKEN
-  on:
-    branch: develop
+after_deploy:
+  - sonar-scanner
