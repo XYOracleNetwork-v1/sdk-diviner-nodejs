@@ -24,7 +24,7 @@ class QueryPaymentPlugin implements IXyoPlugin {
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
     const scan = delegate.deps.QUERY as XyoQuery
-    const redis = new XyoRewardRepository('localhost')
+    const redis = new XyoRewardRepository(delegate.config.host || 'localhost')
     const reward = new XyoSplitReward(redis)
     const endpoint = new XyoRewardsEndpoint(redis)
     const top = new XyoTopRewardsEndpoint(redis)
