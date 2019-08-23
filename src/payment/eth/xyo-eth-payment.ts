@@ -47,7 +47,7 @@ export class XyoEthPaymentValidator {
         }
 
         if (transaction.from !== fromEth) {
-          reject('Invalid from')
+          reject('Invalid from ')
           return
         }
 
