@@ -28,7 +28,7 @@
     "license": "yarn license-checker --onlyAllow 'MIT;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0;ISC;Unlicense;UNKNOWN;BSD*;CC0-1.0' --excludePackages 'colors@0.6.2'"
   },
     "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/@XYOracleNetwork"
   },
   "xyoPlugins": [
     "dist/chain/plugin/index.js",
