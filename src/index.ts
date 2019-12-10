@@ -7,7 +7,7 @@
  * Last Modified: Monday, 22nd April 2019 10:10:13 am
  * Modified By: XYO Development Team (support@xyo.network>)
  * -----
- * Copyright 2017 - 2019 XY - The Persistent Company
+ * Copyright 2017 - 2019 XYO Foundation
  */
 
 export * from './chain/xyo-chain-tracer'
