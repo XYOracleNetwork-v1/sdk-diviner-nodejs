@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-diviner-nodejs",
-  "version": "0.11.15",
+  "version": "0.15.0",
   "description": "XYO Diviner SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
