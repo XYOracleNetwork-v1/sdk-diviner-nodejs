@@ -4,8 +4,6 @@
 
 
 # XYO DIVINER SDK (sdk-diviner-nodejs)
-
-[![NPM](https://nodei.co/npm/@xyo-network/sdk-diviner-nodejs.png)](https://nodei.co/npm/@xyo-network/sdk-diviner-nodejs/) 
  
 [![Build Status](https://travis-ci.com/XYOracleNetwork/sdk-diviner-nodejs.svg?branch=develop)](https://travis-ci.com/XYOracleNetwork/sdk-diviner-nodejs)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f3dd4f4d35e1bd9eeabc/maintainability)](https://codeclimate.com/github/XYOracleNetwork/sdk-diviner-nodejs/maintainability)
