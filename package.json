@@ -9,7 +9,7 @@
     "url": "https://github.com/XYOracleNetwork/sdk-diviner-nodejs.git"
   },
   "author": "Arie Trouw <arie.trouw@xyfindables.com>",
-  "license": "MIT",
+  "license": "LGPL-3.0",
   "files": [
     "dist",
     "bin"
@@ -28,7 +28,7 @@
     "license": "yarn license-checker --onlyAllow 'MIT;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0;ISC;Unlicense;UNKNOWN;BSD*;CC0-1.0' --excludePackages 'colors@0.6.2'"
   },
     "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@xyo-network"
+    "registry": "https://npm.pkg.github.com/"
   },
   "xyoPlugins": [
     "dist/chain/plugin/index.js",
