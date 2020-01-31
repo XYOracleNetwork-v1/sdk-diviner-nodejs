@@ -5,11 +5,11 @@
 
 # XYO DIVINER SDK (sdk-diviner-nodejs)
  
-[![Build Status](https://travis-ci.com/XYOracleNetwork/sdk-diviner-nodejs.svg?branch=develop)](https://travis-ci.com/XYOracleNetwork/sdk-diviner-nodejs)
-[![Maintainability](https://api.codeclimate.com/v1/badges/f3dd4f4d35e1bd9eeabc/maintainability)](https://codeclimate.com/github/XYOracleNetwork/sdk-diviner-nodejs/maintainability)
+![](https://github.com/XYOracleNetwork/sdk-diviner-nodejs/workflows/Build/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/f3dd4f4d35e1bd9eeabc/maintainability)](https://codeclimate.com/github/XYOracleNetwork/sdk-diviner-nodejs/maintainability)
 [![BCH compliance](https://bettercodehub.com/edge/badge/XYOracleNetwork/sdk-diviner-nodejs?branch=master&token=3b794c4e6ed44ed9b7d609e4f49fe41ffc3bd44b)](https://bettercodehub.com/)
-[![David Badge](https://david-dm.org/xyoraclenetwork/sdk-diviner-nodejs/status.svg)](https://david-dm.org/xyoraclenetwork/sdk-diviner-nodejs)
-[![David Badge](https://david-dm.org/xyoraclenetwork/sdk-diviner-nodejs/dev-status.svg)](https://david-dm.org/xyoraclenetwork/sdk-diviner-nodejs)
+[![Known Vulnerabilities](https://snyk.io/test/github/XYOracleNetwork/sdk-diviner-nodejs/badge.svg)](https://snyk.io/test/github/XYOracleNetwork/sdk-diviner-nodejs)
+
+
 
 ## Table of Contents
 
