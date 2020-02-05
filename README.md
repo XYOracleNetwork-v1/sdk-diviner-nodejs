@@ -5,8 +5,7 @@
 
 # XYO DIVINER SDK (sdk-diviner-nodejs)
  
-![](https://github.com/XYOracleNetwork/sdk-diviner-nodejs/workflows/Build/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/f3dd4f4d35e1bd9eeabc/maintainability)](https://codeclimate.com/github/XYOracleNetwork/sdk-diviner-nodejs/maintainability)
-[![BCH compliance](https://bettercodehub.com/edge/badge/XYOracleNetwork/sdk-diviner-nodejs?branch=master&token=3b794c4e6ed44ed9b7d609e4f49fe41ffc3bd44b)](https://bettercodehub.com/)
+![](https://github.com/XYOracleNetwork/sdk-diviner-nodejs/workflows/Build/badge.svg) [![BCH compliance](https://bettercodehub.com/edge/badge/XYOracleNetwork/sdk-diviner-nodejs?branch=master)](https://bettercodehub.com/) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4aabdd4c27d647e5b38feda4a8259451)](https://www.codacy.com/gh/XYOracleNetwork/sdk-diviner-nodejs?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=XYOracleNetwork/sdk-diviner-nodejs&amp;utm_campaign=Badge_Grade) [![Maintainability](https://api.codeclimate.com/v1/badges/feaee7aff17c3e247dea/maintainability)](https://codeclimate.com/github/XYOracleNetwork/sdk-diviner-nodejs/maintainability)
 [![Known Vulnerabilities](https://snyk.io/test/github/XYOracleNetwork/sdk-diviner-nodejs/badge.svg)](https://snyk.io/test/github/XYOracleNetwork/sdk-diviner-nodejs)
 
 
