@@ -1,4 +1,10 @@
-import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  IXyoPlugin,
+  IXyoGraphQlDelegate,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { IXyoChainTracer } from '../../../chain'
 import { XyoQuery } from '../../xyo-query'
 import { createIndexSelectorCreator } from '../../selectors/xyo-index-selector'
@@ -14,10 +20,7 @@ class XyoChainTracerQuery implements IXyoPlugin {
   }
 
   public getPluginDependencies(): string[] {
-    return [
-      XyoPluginProviders.CHAIN_TRACER,
-      XyoPluginProviders.QUERY,
-    ]
+    return [XyoPluginProviders.CHAIN_TRACER, XyoPluginProviders.QUERY]
   }
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
@@ -31,7 +34,6 @@ class XyoChainTracerQuery implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new XyoChainTracerQuery()

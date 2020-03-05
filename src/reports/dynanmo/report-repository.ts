@@ -1,14 +1,15 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table } from './../../payment/repository/dynammodb/table'
 import { DynamoDB } from 'aws-sdk'
-import { IXyoQueryReportRepository, IXyoQueryInfo } from '../xyo-query-report-repository'
+import {
+  IXyoQueryReportRepository,
+  IXyoQueryInfo
+} from '../xyo-query-report-repository'
 
-export class QueryReportTable extends Table implements IXyoQueryReportRepository {
-
-  constructor(
-      tableName: string = 'xyo-diviner-queries',
-      region: string = 'us-east-1'
-    ) {
+export class QueryReportTable extends Table
+  implements IXyoQueryReportRepository {
+  constructor(tableName = 'xyo-diviner-queries', region = 'us-east-1') {
     super(tableName, region)
 
     this.createTableInput = {
@@ -65,12 +66,15 @@ export class QueryReportTable extends Table implements IXyoQueryReportRepository
           },
           TableName: this.tableName
         }
-        this.dynamodb.putItem(params, (err: any, data: DynamoDB.Types.PutItemOutput) => {
-          if (err) {
-            reject(err)
+        this.dynamodb.putItem(
+          params,
+          (err: any, data: DynamoDB.Types.PutItemOutput) => {
+            if (err) {
+              reject(err)
+            }
+            resolve()
           }
-          resolve()
-        })
+        )
       } catch (ex) {
         this.logError(ex)
         reject(ex)
@@ -78,7 +82,11 @@ export class QueryReportTable extends Table implements IXyoQueryReportRepository
     })
   }
 
-  public getQueryInfo(day: number, time: number, limit: number): Promise<IXyoQueryInfo[]> {
+  public getQueryInfo(
+    day: number,
+    time: number,
+    limit: number
+  ): Promise<IXyoQueryInfo[]> {
     return new Promise<IXyoQueryInfo[]>((resolve: any, reject: any) => {
       try {
         const params: DynamoDB.Types.QueryInput = {
@@ -93,36 +101,36 @@ export class QueryReportTable extends Table implements IXyoQueryReportRepository
             '#time': 'Time'
           },
           ScanIndexForward: false,
-          TableName: this.tableName,
+          TableName: this.tableName
         }
 
-        this.dynamodb.query(params, async(err: any, data: DynamoDB.Types.ScanOutput) => {
-          if (err) {
-            this.logError(err)
-            reject(err)
-          }
-
-          const result = []
-
-          if (data && data.Items) {
-            for (const item of data.Items) {
-
-              result.push({
-                spender: item.Spender.S,
-                time: new Date(parseInt(item.Time.N || '0', 10)),
-                price: parseInt(item.Price.N || '0', 10),
-                query: item.Query.S,
-              })
-
+        this.dynamodb.query(
+          params,
+          async (err: any, data: DynamoDB.Types.ScanOutput) => {
+            if (err) {
+              this.logError(err)
+              reject(err)
             }
+
+            const result = []
+
+            if (data && data.Items) {
+              for (const item of data.Items) {
+                result.push({
+                  spender: item.Spender.S,
+                  time: new Date(parseInt(item.Time.N || '0', 10)),
+                  price: parseInt(item.Price.N || '0', 10),
+                  query: item.Query.S
+                })
+              }
+            }
+            resolve(result)
           }
-          resolve(result)
-        })
+        )
       } catch (ex) {
         this.logError(ex)
         reject(ex)
       }
     })
   }
-
 }

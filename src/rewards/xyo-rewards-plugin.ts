@@ -1,5 +1,8 @@
-
-import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+import {
+  IXyoPlugin,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { XyoQuery } from '../query/xyo-query'
 import { XyoSplitReward } from './xyo-split-reward'
 import { XyoRewardRepository } from './xyo-redis-reward-repository'
@@ -7,7 +10,6 @@ import { XyoRewardsEndpoint } from './xyo-reqards-endpoint'
 import { XyoTopRewardsEndpoint } from './xyo-top-rewards-endpoint'
 
 class QueryPaymentPlugin implements IXyoPlugin {
-
   public getName(): string {
     return 'reward-payment'
   }
@@ -17,9 +19,7 @@ class QueryPaymentPlugin implements IXyoPlugin {
   }
 
   public getPluginDependencies(): string[] {
-    return [
-      XyoPluginProviders.QUERY
-    ]
+    return [XyoPluginProviders.QUERY]
   }
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
@@ -39,7 +39,6 @@ class QueryPaymentPlugin implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new QueryPaymentPlugin()

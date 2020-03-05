@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { DynamoDB } from 'aws-sdk'
 import { XyoBase } from '@xyo-network/sdk-base-nodejs'
 
@@ -26,16 +29,24 @@ export class Table extends XyoBase {
     return description.ItemCount
   }
 
-  protected async readTableDescription(): Promise<DynamoDB.Types.TableDescription> {
+  protected async readTableDescription(): Promise<
+    DynamoDB.Types.TableDescription
+  > {
     return new Promise((resolve, reject) => {
       try {
-        this.dynamodb.describeTable({ TableName: this.tableName }, ((describeErr: any, describeData: DynamoDB.Types.DescribeTableOutput) => {
-          if (describeErr) {
-            reject(describeErr)
-            return
+        this.dynamodb.describeTable(
+          { TableName: this.tableName },
+          (
+            describeErr: any,
+            describeData: DynamoDB.Types.DescribeTableOutput
+          ) => {
+            if (describeErr) {
+              reject(describeErr)
+              return
+            }
+            resolve(describeData.Table)
           }
-          resolve(describeData.Table)
-        }))
+        )
       } catch (ex) {
         this.logError(ex)
         reject(ex)
@@ -47,14 +58,17 @@ export class Table extends XyoBase {
     return new Promise((resolve, reject) => {
       try {
         if (this.createTableInput) {
-          this.dynamodb.createTable(this.createTableInput, (createErr: any, tableData: DynamoDB.Types.CreateTableOutput) => {
-            if (createErr) {
-              this.logError(createErr)
-              reject(createErr)
-              return
+          this.dynamodb.createTable(
+            this.createTableInput,
+            (createErr: any, tableData: DynamoDB.Types.CreateTableOutput) => {
+              if (createErr) {
+                this.logError(createErr)
+                reject(createErr)
+                return
+              }
+              resolve(tableData)
             }
-            resolve(tableData)
-          })
+          )
         } else {
           reject('createTableInput Required')
         }
@@ -68,7 +82,7 @@ export class Table extends XyoBase {
   private async createTableIfNeeded() {
     return new Promise((resolve, reject) => {
       try {
-        this.dynamodb.listTables(async(listErr, listData) => {
+        this.dynamodb.listTables(async (listErr, listData) => {
           if (listErr) {
             reject(listErr)
             return

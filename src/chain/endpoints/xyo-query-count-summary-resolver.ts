@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export class XyoQuerieCountEndpoint {
-
   public static query = 'queryCountByHourSummary(): '
   public static queryName = 'countByHourSummary'
   private queryStats: Map<number, number>
@@ -13,5 +14,4 @@ export class XyoQuerieCountEndpoint {
       queryStats: this.queryStats
     }
   }
-
 }

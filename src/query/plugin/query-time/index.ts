@@ -1,8 +1,17 @@
-import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  IXyoPlugin,
+  IXyoGraphQlDelegate,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { XyoQuery } from '../../xyo-query'
 import { createPageSelector } from '../../selectors/xyo-page-selector'
 import { createHashSelector } from '../../selectors/xyo-hash-selector'
-import { IXyoOriginBlockGetter, IXyoBlocksByTime } from '@xyo-network/sdk-core-nodejs'
+import {
+  IXyoOriginBlockGetter,
+  IXyoBlocksByTime
+} from '@xyo-network/sdk-core-nodejs'
 import { createTimeSelector } from '../../selectors/xyo-time-selector'
 
 class XyoQueryTime implements IXyoPlugin {
@@ -15,10 +24,7 @@ class XyoQueryTime implements IXyoPlugin {
   }
 
   public getPluginDependencies(): string[] {
-    return [
-      'BLOCK_REPOSITORY_TIME',
-      XyoPluginProviders.QUERY
-    ]
+    return ['BLOCK_REPOSITORY_TIME', XyoPluginProviders.QUERY]
   }
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
@@ -30,7 +36,6 @@ class XyoQueryTime implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new XyoQueryTime()

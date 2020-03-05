@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IXyoQueryReportRepository } from './xyo-query-report-repository'
 
 export class XyoQueryReportEndpoint {
-
-  public static query = 'queries(day: Int!, time: String!, limit: Int!): [QueryReport!]'
+  public static query =
+    'queries(day: Int!, time: String!, limit: Int!): [QueryReport!]'
   public static queryName = 'queries'
   public static type = `
     type QueryReport {
@@ -20,8 +21,13 @@ export class XyoQueryReportEndpoint {
   }
 
   public async resolve(obj: any, args: any): Promise<any> {
-
-    return (await this.reportStore.getQueryInfo(parseInt(args.day, 10), parseInt(args.time, 10), parseInt(args.limit, 10))).map((object) => {
+    return (
+      await this.reportStore.getQueryInfo(
+        parseInt(args.day, 10),
+        parseInt(args.time, 10),
+        parseInt(args.limit, 10)
+      )
+    ).map(object => {
       const graphQlObj = object as any
 
       graphQlObj.time = object.time.getTime().toString()
@@ -30,5 +36,4 @@ export class XyoQueryReportEndpoint {
       return graphQlObj
     })
   }
-
 }

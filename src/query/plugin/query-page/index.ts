@@ -1,4 +1,10 @@
-import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  IXyoPlugin,
+  IXyoGraphQlDelegate,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { XyoQuery } from '../../xyo-query'
 import { createPageSelector } from '../../selectors/xyo-page-selector'
 import { createHashSelector } from '../../selectors/xyo-hash-selector'
@@ -14,10 +20,7 @@ class XyoPageQuery implements IXyoPlugin {
   }
 
   public getPluginDependencies(): string[] {
-    return [
-      XyoPluginProviders.BLOCK_REPOSITORY_GET,
-      XyoPluginProviders.QUERY
-    ]
+    return [XyoPluginProviders.BLOCK_REPOSITORY_GET, XyoPluginProviders.QUERY]
   }
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
@@ -31,7 +34,6 @@ class XyoPageQuery implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new XyoPageQuery()

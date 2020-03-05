@@ -1,4 +1,14 @@
-import { IXyoSelecterCreator, IXyoFilterCreator, IXyoMutatorCreater, IXyoQuery, IXyoConfig, IXyoAfterWare } from '.'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import {
+  IXyoSelecterCreator,
+  IXyoFilterCreator,
+  IXyoMutatorCreater,
+  IXyoQuery,
+  IXyoConfig,
+  IXyoAfterWare
+} from '.'
 import { XyoMultiplexedQueryAuth } from './auth/xyo-query-auth-multiplex'
 
 export class XyoQuery {
@@ -7,7 +17,10 @@ export class XyoQuery {
   private selectorCreators: Map<string, IXyoSelecterCreator> = new Map()
   private filterCreators: Map<string, IXyoFilterCreator> = new Map()
   private mutatorCreators: Map<string, IXyoMutatorCreater> = new Map()
-  private finishNotifiers: Map<string, (query: IXyoQuery, blocks: Buffer[]) => void> = new Map()
+  private finishNotifiers: Map<
+    string,
+    (query: IXyoQuery, blocks: Buffer[]) => void
+  > = new Map()
 
   public addSelector(selector: IXyoSelecterCreator) {
     this.selectorCreators.set(selector.name, selector)
@@ -21,7 +34,10 @@ export class XyoQuery {
     this.mutatorCreators.set(mutator.name, mutator)
   }
 
-  public addFinishNotify(name: string, notify: (query: IXyoQuery, blocks: Buffer[]) => void) {
+  public addFinishNotify(
+    name: string,
+    notify: (query: IXyoQuery, blocks: Buffer[]) => void
+  ) {
     this.finishNotifiers.set(name, notify)
   }
 
@@ -43,8 +59,8 @@ export class XyoQuery {
     return supported
   }
 
-  public async queryFor(query: IXyoQuery): Promise < any > {
-    if (this .auth) {
+  public async queryFor(query: IXyoQuery): Promise<any> {
+    if (this.auth) {
       const auth = await this.auth.auth(query)
 
       query.shouldReward = auth.shouldReward
@@ -63,7 +79,7 @@ export class XyoQuery {
     }
 
     if (query.filter) {
-      blocks = await this.filterBlocks(query.filter, blocks) || blocks
+      blocks = (await this.filterBlocks(query.filter, blocks)) || blocks
     }
 
     if (this.auth) {
@@ -71,15 +87,23 @@ export class XyoQuery {
     }
 
     if (query.mutate) {
-      return this.mutateBlocks(query.mutate, blocks, firstQuery && firstQuery.meta)
+      return this.mutateBlocks(
+        query.mutate,
+        blocks,
+        firstQuery && firstQuery.meta
+      )
     }
 
-    return blocks.map((block) => {
+    return blocks.map(block => {
       return block.toString('base64')
     })
   }
 
-  private async mutateBlocks(config: IXyoConfig, blocks: Buffer[], meta: any): Promise < any > {
+  private async mutateBlocks(
+    config: IXyoConfig,
+    blocks: Buffer[],
+    meta: any
+  ): Promise<any> {
     const mutatorCreator = this.mutatorCreators.get(config.name)
 
     if (mutatorCreator) {
@@ -90,7 +114,10 @@ export class XyoQuery {
     return undefined
   }
 
-  private async filterBlocks(config: IXyoConfig, blocks: Buffer[]): Promise < Buffer[] | undefined > {
+  private async filterBlocks(
+    config: IXyoConfig,
+    blocks: Buffer[]
+  ): Promise<Buffer[] | undefined> {
     const filterCreator = this.filterCreators.get(config.name)
 
     if (filterCreator) {
@@ -101,15 +128,19 @@ export class XyoQuery {
     return undefined
   }
 
-  private async selectBlocks(config: IXyoConfig): Promise < {result: Buffer[], meta: any} | undefined > {
+  private async selectBlocks(
+    config: IXyoConfig
+  ): Promise<{ result: Buffer[]; meta: any } | undefined> {
     const selectorCreator = this.selectorCreators.get(config.name)
 
     if (selectorCreator) {
-      const selector = selectorCreator.create(config.config, this.selectorCreators)
+      const selector = selectorCreator.create(
+        config.config,
+        this.selectorCreators
+      )
       return selector.select()
     }
 
     return undefined
-
   }
 }

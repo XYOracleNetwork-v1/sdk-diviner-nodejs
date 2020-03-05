@@ -1,16 +1,21 @@
-import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+/* eslint-disable @typescript-eslint/member-delimiter-style */
+/* eslint-disable @typescript-eslint/interface-name-prefix */
+import {
+  IXyoPlugin,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { XyoEthRedeemEndpoint } from './endpoints/xyo-eth-redeem-credits'
 import { XyoEthPaymentValidator } from '../xyo-eth-payment'
 import { IXyoPaymentStore } from '../..'
 import { XyoPayToEndpoint } from './endpoints/xyo-payto-endpoint'
 
 interface IEthPaymentPluginConfig {
-  endpoint: string,
-  address: string,
+  endpoint: string
+  address: string
 }
 
 class EthPaymentPlugin implements IXyoPlugin {
-
   public getName(): string {
     return 'eth-payment'
   }
@@ -20,9 +25,7 @@ class EthPaymentPlugin implements IXyoPlugin {
   }
 
   public getPluginDependencies(): string[] {
-    return [
-      XyoPluginProviders.PAYMENT_STORE
-    ]
+    return [XyoPluginProviders.PAYMENT_STORE]
   }
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
@@ -41,7 +44,6 @@ class EthPaymentPlugin implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new EthPaymentPlugin()

@@ -1,5 +1,8 @@
 import { IXyoPlugin, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
-import { IXyoQueryReportRepository, IXyoQueryInfo } from './xyo-query-report-repository'
+import {
+  IXyoQueryReportRepository,
+  IXyoQueryInfo
+} from './xyo-query-report-repository'
 import { XyoQuery } from '../query/xyo-query'
 import { XyoSha256 } from '@xyo-network/sdk-core-nodejs'
 import { XyoQueryReportEndpoint } from './xyo-query-report-endpoint'
@@ -13,18 +16,20 @@ class XyoQueryReportPlugin implements IXyoPlugin {
     return []
   }
   public getPluginDependencies(): string[] {
-    return [
-      'REPORT_REPOSITORY'
-    ]
+    return ['REPORT_REPOSITORY']
   }
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
-    const repository = delegate.deps.REPORT_REPOSITORY as IXyoQueryReportRepository
+    const repository = delegate.deps
+      .REPORT_REPOSITORY as IXyoQueryReportRepository
     const query = delegate.deps.QUERY as XyoQuery
     const hasher = new XyoSha256()
 
     delegate.graphql.addType(XyoQueryReportEndpoint.type)
     delegate.graphql.addQuery(XyoQueryReportEndpoint.query)
-    delegate.graphql.addResolver(XyoQueryReportEndpoint.queryName, new XyoQueryReportEndpoint(repository))
+    delegate.graphql.addResolver(
+      XyoQueryReportEndpoint.queryName,
+      new XyoQueryReportEndpoint(repository)
+    )
 
     query.auth.alwaysAuth.push((queryConfig, price) => {
       const queryCopy = JSON.parse(JSON.stringify(queryConfig))
@@ -35,13 +40,22 @@ class XyoQueryReportPlugin implements IXyoPlugin {
         spender = queryConfig.payment.apiKey
       }
 
-      const hashesSpender = hasher.hash(Buffer.from(`NadffhkkiU3hGRVGWk50${spender}fhVq38XiNjfbmKkTlI2J`, 'utf8')).getValue().getContentsCopy().toString('base64')
+      const hashesSpender = hasher
+        .hash(
+          Buffer.from(
+            `NadffhkkiU3hGRVGWk50${spender}fhVq38XiNjfbmKkTlI2J`,
+            'utf8'
+          )
+        )
+        .getValue()
+        .getContentsCopy()
+        .toString('base64')
 
       const info: IXyoQueryInfo = {
         price,
         spender: hashesSpender,
         time: new Date(),
-        query: queryCopy,
+        query: queryCopy
       }
 
       repository.putQueryInfo(info)
@@ -49,7 +63,6 @@ class XyoQueryReportPlugin implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new XyoQueryReportPlugin()

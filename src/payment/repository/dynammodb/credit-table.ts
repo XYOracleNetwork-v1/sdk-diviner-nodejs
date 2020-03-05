@@ -1,13 +1,10 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table } from './table'
 import { DynamoDB } from 'aws-sdk'
 
 export class CreditTable extends Table {
-
-  constructor(
-      tableName: string = 'xyo-diviner-credits',
-      region: string = 'us-east-1'
-    ) {
+  constructor(tableName = 'xyo-diviner-credits', region = 'us-east-1') {
     super(tableName, region)
 
     this.createTableInput = {
@@ -45,12 +42,15 @@ export class CreditTable extends Table {
           },
           TableName: this.tableName
         }
-        this.dynamodb.putItem(params, (err: any, data: DynamoDB.Types.PutItemOutput) => {
-          if (err) {
-            reject(err)
+        this.dynamodb.putItem(
+          params,
+          (err: any, data: DynamoDB.Types.PutItemOutput) => {
+            if (err) {
+              reject(err)
+            }
+            resolve()
           }
-          resolve()
-        })
+        )
       } catch (ex) {
         this.logError(ex)
         reject(ex)
@@ -70,16 +70,19 @@ export class CreditTable extends Table {
           ReturnConsumedCapacity: 'TOTAL',
           TableName: this.tableName
         }
-        this.dynamodb.getItem(params, (err: any, data: DynamoDB.Types.GetItemOutput) => {
-          if (err) {
-            reject(err)
-          }
+        this.dynamodb.getItem(
+          params,
+          (err: any, data: DynamoDB.Types.GetItemOutput) => {
+            if (err) {
+              reject(err)
+            }
 
-          if (data && data.Item && data.Item.Credits.N) {
-            resolve(parseFloat(data.Item.Credits.N))
+            if (data && data.Item && data.Item.Credits.N) {
+              resolve(parseFloat(data.Item.Credits.N))
+            }
+            resolve(undefined)
           }
-          resolve(undefined)
-        })
+        )
       } catch (ex) {
         this.logError(ex)
         reject(ex)

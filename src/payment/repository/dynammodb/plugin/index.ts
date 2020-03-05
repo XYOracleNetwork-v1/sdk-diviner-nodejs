@@ -1,10 +1,17 @@
-import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/member-delimiter-style */
+/* eslint-disable @typescript-eslint/interface-name-prefix */
+import {
+  IXyoPlugin,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { IXyoPaymentStore } from '../../..'
 import { DynamoSpendRepository } from '../dynammo-spend-store'
 
 interface IEthPaymentPluginConfig {
-  endpoint: string,
-  address: string,
+  endpoint: string
+  address: string
 }
 
 class DynamoStoreRepositoryPlugin implements IXyoPlugin {
@@ -15,9 +22,7 @@ class DynamoStoreRepositoryPlugin implements IXyoPlugin {
   }
 
   public getProvides(): string[] {
-    return [
-      XyoPluginProviders.PAYMENT_STORE
-    ]
+    return [XyoPluginProviders.PAYMENT_STORE]
   }
 
   public getPluginDependencies(): string[] {
@@ -33,7 +38,6 @@ class DynamoStoreRepositoryPlugin implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new DynamoStoreRepositoryPlugin()

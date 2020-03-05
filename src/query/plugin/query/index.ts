@@ -1,4 +1,10 @@
-import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  IXyoPlugin,
+  IXyoGraphQlDelegate,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { XyoQuery } from '../../xyo-query'
 import { XyoChainScanEndpoint } from './xyo-scan-resolver'
 import { intersectionFilter } from '../../filters/intersection'
@@ -16,9 +22,7 @@ class XyoChainScanPlugin implements IXyoPlugin {
   }
 
   public getProvides(): string[] {
-    return [
-      XyoPluginProviders.QUERY
-    ]
+    return [XyoPluginProviders.QUERY]
   }
 
   public getPluginDependencies(): string[] {
@@ -40,13 +44,15 @@ class XyoChainScanPlugin implements IXyoPlugin {
     delegate.graphql.addResolver(XyoChainScanEndpoint.queryName, endpoint)
 
     delegate.graphql.addQuery(XyoSupportedResolver.query)
-    delegate.graphql.addResolver(XyoSupportedResolver.queryName, supportedResolver)
+    delegate.graphql.addResolver(
+      XyoSupportedResolver.queryName,
+      supportedResolver
+    )
 
     this.QUERY = scanner
 
     return true
   }
-
 }
 
 export = new XyoChainScanPlugin()

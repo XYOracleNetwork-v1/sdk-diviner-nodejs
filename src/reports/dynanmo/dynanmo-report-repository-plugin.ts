@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IXyoPlugin, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
 import { QueryReportTable } from './report-repository'
 import { IXyoQueryReportRepository } from '../xyo-query-report-repository'
@@ -10,9 +11,7 @@ class XyoQueryReportPlugin implements IXyoPlugin {
   }
 
   public getProvides(): string[] {
-    return [
-      'REPORT_REPOSITORY'
-    ]
+    return ['REPORT_REPOSITORY']
   }
   public getPluginDependencies(): string[] {
     return []
@@ -24,7 +23,6 @@ class XyoQueryReportPlugin implements IXyoPlugin {
 
     return table.initialize()
   }
-
 }
 
 export = new XyoQueryReportPlugin()

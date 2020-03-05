@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/member-delimiter-style */
+/* eslint-disable @typescript-eslint/interface-name-prefix */
 import { XyoBoundWitness } from '@xyo-network/sdk-core-nodejs'
 import bs58 from 'bs58'
 import { IXyoFilter, IXyoFilterCreator } from '..'
@@ -7,14 +11,13 @@ interface IItersectionConditionConfig {
 }
 
 class IntersectionCondition implements IXyoFilter {
-
   private config: IItersectionConditionConfig
 
   constructor(config: IItersectionConditionConfig) {
     this.config = config
   }
 
-  public async filter(from: Buffer[]): Promise<Buffer[]>  {
+  public async filter(from: Buffer[]): Promise<Buffer[]> {
     return from.filter(boundWitness => this.didIntersect(boundWitness))
   }
 
@@ -27,12 +30,10 @@ class IntersectionCondition implements IXyoFilter {
 
       for (const keyset of publicKeys) {
         for (const key of keyset) {
-
           if (!founds[i]) {
             const keyBytes = key.getAll().getContentsCopy()
             founds[i] = keyBytes.equals(bs58.decode(this.config.with[i]))
           }
-
         }
       }
     }
@@ -41,17 +42,15 @@ class IntersectionCondition implements IXyoFilter {
       if (!found) {
         return false
       }
-
     }
 
     return true
   }
-
 }
 
 export const intersectionFilter: IXyoFilterCreator = {
   name: 'FILTER_INTERSECTION',
-  create: (config: any,  filters: Map<string, IXyoFilterCreator>) => {
+  create: (config: any, filters: Map<string, IXyoFilterCreator>) => {
     return new IntersectionCondition(config)
   }
 }

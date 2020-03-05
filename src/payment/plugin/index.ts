@@ -1,4 +1,8 @@
-import { IXyoPlugin, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+import {
+  IXyoPlugin,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { XyoCreditEndpoint } from './endpoints/xyo-check-credits-endpoint'
 import { XyoSpendEndpoint } from './endpoints/xyo-is-spent-endpoint'
 import { XyoQuery } from '../../query/xyo-query'
@@ -6,7 +10,6 @@ import { XyoQueryAuth } from '../../query/auth/xyo-query-auth'
 import { IXyoPaymentStore } from '..'
 
 class QueryPaymentPlugin implements IXyoPlugin {
-
   public getName(): string {
     return 'query-payment'
   }
@@ -16,10 +19,7 @@ class QueryPaymentPlugin implements IXyoPlugin {
   }
 
   public getPluginDependencies(): string[] {
-    return [
-      XyoPluginProviders.QUERY,
-      XyoPluginProviders.PAYMENT_STORE
-    ]
+    return [XyoPluginProviders.QUERY, XyoPluginProviders.PAYMENT_STORE]
   }
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
@@ -37,7 +37,6 @@ class QueryPaymentPlugin implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new QueryPaymentPlugin()
