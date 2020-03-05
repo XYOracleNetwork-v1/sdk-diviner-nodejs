@@ -1,4 +1,10 @@
-import { IXyoPlugin, IXyoGraphQlDelegate, IXyoPluginDelegate, XyoPluginProviders } from '@xyo-network/sdk-base-nodejs'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  IXyoPlugin,
+  IXyoGraphQlDelegate,
+  IXyoPluginDelegate,
+  XyoPluginProviders
+} from '@xyo-network/sdk-base-nodejs'
 import { XyoQuery } from '../../xyo-query'
 import { IXyoBlocksByGeohashRepository } from '@xyo-network/sdk-core-nodejs'
 import { createGeohashSelectorCreator } from '../../selectors/xyo-geohash-selector'
@@ -20,7 +26,8 @@ class XyoGeohashQuery implements IXyoPlugin {
   }
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
-    const geohash = delegate.deps.BLOCK_REPOSITORY_PUBLIC_GEOHASH as IXyoBlocksByGeohashRepository
+    const geohash = delegate.deps
+      .BLOCK_REPOSITORY_PUBLIC_GEOHASH as IXyoBlocksByGeohashRepository
     const query = delegate.deps.QUERY as XyoQuery
     const selector = createGeohashSelectorCreator(geohash)
 
@@ -28,7 +35,6 @@ class XyoGeohashQuery implements IXyoPlugin {
 
     return true
   }
-
 }
 
 export = new XyoGeohashQuery()

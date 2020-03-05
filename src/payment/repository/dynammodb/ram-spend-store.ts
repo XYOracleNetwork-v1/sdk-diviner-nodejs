@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { IXyoPaymentStore } from '../..'
 
 export class RamSpendRepository implements IXyoPaymentStore {
@@ -17,20 +18,19 @@ export class RamSpendRepository implements IXyoPaymentStore {
     return 0
   }
 
-  public async setCreditsForKey(key: string, credits: number): Promise < void > {
+  public async setCreditsForKey(key: string, credits: number): Promise<void> {
     this.creditTable.set(key, credits)
   }
 
-  public async spent(creditKey: string): Promise < void > {
+  public async spent(creditKey: string): Promise<void> {
     this.spendTable.set(creditKey, 1)
   }
 
-  public async didSpend(creditKey: string): Promise < boolean > {
+  public async didSpend(creditKey: string): Promise<boolean> {
     return this.spendTable.get(creditKey) !== undefined
   }
 
   public async initialize() {
     return true
   }
-
 }

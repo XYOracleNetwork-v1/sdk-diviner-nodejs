@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IXyoPaymentStore } from '../..'
 
 export class XyoSpendEndpoint {
-
   public static query = 'didSpend(spendKey: String): Boolean!'
   public static queryName = 'didSpend'
   private spendStore: IXyoPaymentStore
@@ -14,5 +14,4 @@ export class XyoSpendEndpoint {
     console.log((await this.spendStore.didSpend(args.spendKey)) || false)
     return (await this.spendStore.didSpend(args.spendKey)) || false
   }
-
 }

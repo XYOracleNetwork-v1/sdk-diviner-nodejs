@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FirestoreCoinAuth } from '../firestore-coin-auth'
 
 export class XyoFirestoreCreditEndpoint {

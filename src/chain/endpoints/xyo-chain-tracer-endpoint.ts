@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IXyoChainTracer } from '../xyo-chain-tracer'
 import bs58 from 'bs58'
 import { bufferToGraphQlBlock } from './xyo-buffer-to-graphql-block'
 
 export class XyoChainTracerEndpoint {
-
-  public static query = 'traceChain(publicKey: String!, up: Boolean!, limit: Int, index: Int): XyoBlockCollection'
+  public static query =
+    'traceChain(publicKey: String!, up: Boolean!, limit: Int, index: Int): XyoBlockCollection'
   public static queryName = 'traceChain'
   private tracer: IXyoChainTracer
 
@@ -16,7 +17,12 @@ export class XyoChainTracerEndpoint {
     const stringPublicKey = args.publicKey as string
     const publicKey = bs58.decode(stringPublicKey)
 
-    const data = await this.tracer.traceChain(publicKey, args.limit, args.index, args.up)
+    const data = await this.tracer.traceChain(
+      publicKey,
+      args.limit,
+      args.index,
+      args.up
+    )
 
     if (!data) {
       return undefined
@@ -27,5 +33,4 @@ export class XyoChainTracerEndpoint {
       keySet: [publicKey]
     }
   }
-
 }

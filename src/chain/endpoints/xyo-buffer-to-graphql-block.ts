@@ -1,12 +1,18 @@
-
-import { XyoBoundWitness, XyoSha256, XyoHumanHeuristicResolver,  XyoStructure, XyoSchema  } from '@xyo-network/sdk-core-nodejs'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  XyoBoundWitness,
+  XyoSha256,
+  XyoHumanHeuristicResolver,
+  XyoStructure,
+  XyoSchema
+} from '@xyo-network/sdk-core-nodejs'
 import bs58 from 'bs58'
 
 const hasher = new XyoSha256()
 
 // todo move this into a shared graphql repo
 export function bufferToGraphQlBlock(buffer: Buffer): any {
-
   const boundWitness = new XyoBoundWitness(buffer)
   return {
     // todo get human readable
@@ -25,20 +31,33 @@ export function bufferToGraphQlBlock(buffer: Buffer): any {
       return {
         array: sigset.map((sig: XyoStructure) => {
           return {
-            value: sig.getAll().getContentsCopy().toString('base64')
+            value: sig
+              .getAll()
+              .getContentsCopy()
+              .toString('base64')
           }
         })
       }
     }),
-    heuristics: boundWitness.getHeuristics().map((heuristics: XyoStructure[]) => {
-      return {
-        array: heuristics.map((heuristic: XyoStructure) => {
-          return {
-            value: heuristic.getAll().getContentsCopy().toString('base64')
-          }
-        })
-      }
-    }),
-    signedHash: bs58.encode(hasher.hash(boundWitness.getSigningData()).getAll().getContentsCopy())
+    heuristics: boundWitness
+      .getHeuristics()
+      .map((heuristics: XyoStructure[]) => {
+        return {
+          array: heuristics.map((heuristic: XyoStructure) => {
+            return {
+              value: heuristic
+                .getAll()
+                .getContentsCopy()
+                .toString('base64')
+            }
+          })
+        }
+      }),
+    signedHash: bs58.encode(
+      hasher
+        .hash(boundWitness.getSigningData())
+        .getAll()
+        .getContentsCopy()
+    )
   }
 }

@@ -1,4 +1,10 @@
-import { IXyoPlugin, XyoPluginProviders, IXyoPluginDelegate } from '@xyo-network/sdk-base-nodejs'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  IXyoPlugin,
+  XyoPluginProviders,
+  IXyoPluginDelegate
+} from '@xyo-network/sdk-base-nodejs'
 import { XyoQuery } from '../../../../query/xyo-query'
 import { XyoCoinAuth } from '../firestore-coin-spend-store'
 import { FirestoreCoinAuth } from '../firestore-coin-auth'
@@ -7,7 +13,6 @@ import firebaseAdmin from 'firebase-admin'
 import firebase from 'firebase'
 
 class CoinPaymentPlugin implements IXyoPlugin {
-
   public getName(): string {
     return 'coin-payment'
   }
@@ -17,14 +22,12 @@ class CoinPaymentPlugin implements IXyoPlugin {
   }
 
   public getPluginDependencies(): string[] {
-    return [
-      XyoPluginProviders.QUERY
-    ]
+    return [XyoPluginProviders.QUERY]
   }
 
   public async initialize(delegate: IXyoPluginDelegate): Promise<boolean> {
     firebaseAdmin.initializeApp({
-      databaseURL: 'https://xyo-network-1522800011804.firebaseio.com',
+      databaseURL: 'https://xyo-network-1522800011804.firebaseio.com'
     })
 
     const scan = delegate.deps.QUERY as XyoQuery
@@ -34,11 +37,13 @@ class CoinPaymentPlugin implements IXyoPlugin {
 
     const creditEndpoint = new XyoFirestoreCreditEndpoint(auth)
     delegate.graphql.addQuery(XyoFirestoreCreditEndpoint.query)
-    delegate.graphql.addResolver(XyoFirestoreCreditEndpoint.queryName, creditEndpoint)
+    delegate.graphql.addResolver(
+      XyoFirestoreCreditEndpoint.queryName,
+      creditEndpoint
+    )
 
     return true
   }
-
 }
 
 export = new CoinPaymentPlugin()

@@ -1,13 +1,10 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table } from './table'
 import { DynamoDB } from 'aws-sdk'
 
 export class SpendTable extends Table {
-
-  constructor(
-      tableName: string = 'xyo-diviner-spent',
-      region: string = 'us-east-1'
-    ) {
+  constructor(tableName = 'xyo-diviner-spent', region = 'us-east-1') {
     super(tableName, region)
 
     this.createTableInput = {
@@ -38,16 +35,19 @@ export class SpendTable extends Table {
           Item: {
             SpendKey: {
               S: key
-            },
+            }
           },
           TableName: this.tableName
         }
-        this.dynamodb.putItem(params, (err: any, data: DynamoDB.Types.PutItemOutput) => {
-          if (err) {
-            reject(err)
+        this.dynamodb.putItem(
+          params,
+          (err: any, data: DynamoDB.Types.PutItemOutput) => {
+            if (err) {
+              reject(err)
+            }
+            resolve()
           }
-          resolve()
-        })
+        )
       } catch (ex) {
         this.logError(ex)
         reject(ex)
@@ -67,18 +67,21 @@ export class SpendTable extends Table {
           ReturnConsumedCapacity: 'TOTAL',
           TableName: this.tableName
         }
-        this.dynamodb.getItem(params, (err: any, data: DynamoDB.Types.GetItemOutput) => {
-          if (err) {
-            reject(err)
-          }
+        this.dynamodb.getItem(
+          params,
+          (err: any, data: DynamoDB.Types.GetItemOutput) => {
+            if (err) {
+              reject(err)
+            }
 
-          if (data && data.Item) {
-            const result = data.Item.SpendKey.S
-            resolve(result)
-            return
+            if (data && data.Item) {
+              const result = data.Item.SpendKey.S
+              resolve(result)
+              return
+            }
+            resolve()
           }
-          resolve()
-        })
+        )
       } catch (ex) {
         this.logError(ex)
         reject(ex)

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { SpendTable } from './spend-table'
 import { CreditTable } from './credit-table'
 import { IXyoPaymentStore } from '../..'
@@ -6,13 +7,9 @@ export class DynamoSpendRepository implements IXyoPaymentStore {
   private spendTable: SpendTable
   private creditTable: CreditTable
 
-  constructor(
-    tablePrefix: string = 'xyo-diviner',
-    region: string = 'us-east-1'
-  ) {
+  constructor(tablePrefix = 'xyo-diviner', region = 'us-east-1') {
     this.spendTable = new SpendTable(`${tablePrefix}-spend`, region)
     this.creditTable = new CreditTable(`${tablePrefix}-credits`, region)
-
   }
   public getCreditsForKey(key: string): Promise<number | undefined> {
     return this.creditTable.getBalance(key)
@@ -27,7 +24,7 @@ export class DynamoSpendRepository implements IXyoPaymentStore {
   }
 
   public async didSpend(creditKey: string): Promise<boolean> {
-    return (await this.spendTable.getItem(creditKey) !== undefined)
+    return (await this.spendTable.getItem(creditKey)) !== undefined
   }
 
   public async initialize() {
@@ -35,5 +32,4 @@ export class DynamoSpendRepository implements IXyoPaymentStore {
     this.creditTable.initialize()
     return true
   }
-
 }

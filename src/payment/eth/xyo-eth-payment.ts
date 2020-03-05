@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Web3 from 'web3'
 import { IXyoPaymentStore } from '..'
 import ethSigUtil from 'eth-sig-util'
@@ -13,14 +14,22 @@ export class XyoEthPaymentValidator {
     this.paymentStore = paymentStore
   }
 
-  public async redeem(txHash: string, from: string, to: string, signature: string, privateApiKey: string, erc20ToCreditRatio: number): Promise<boolean> {
-
+  public async redeem(
+    txHash: string,
+    from: string,
+    to: string,
+    signature: string,
+    privateApiKey: string,
+    erc20ToCreditRatio: number
+  ): Promise<boolean> {
     const expectedAddress = (ethSigUtil as any).recoverTypedSignature({
-      data: [{
-        type: 'string',      // Any valid solidity type
-        name: 'Message',     // Any string label you want
-        value: privateApiKey
-      }],
+      data: [
+        {
+          type: 'string', // Any valid solidity type
+          name: 'Message', // Any string label you want
+          value: privateApiKey
+        }
+      ],
       sig: signature
     })
 
@@ -29,8 +38,12 @@ export class XyoEthPaymentValidator {
 
       if (numberOfErc20 && !(await this.paymentStore.didSpend(txHash))) {
         await this.paymentStore.spent(txHash)
-        const numberOfCredits = await this.paymentStore.getCreditsForKey(privateApiKey) || 0
-        await this.paymentStore.setCreditsForKey(privateApiKey, numberOfCredits + (erc20ToCreditRatio * numberOfErc20))
+        const numberOfCredits =
+          (await this.paymentStore.getCreditsForKey(privateApiKey)) || 0
+        await this.paymentStore.setCreditsForKey(
+          privateApiKey,
+          numberOfCredits + erc20ToCreditRatio * numberOfErc20
+        )
         return true
       }
     }
@@ -38,7 +51,11 @@ export class XyoEthPaymentValidator {
     return false
   }
 
-  public async getAmountInTransaction(txHash: string, fromEth: string, toEth: string): Promise<number | undefined> {
+  public async getAmountInTransaction(
+    txHash: string,
+    fromEth: string,
+    toEth: string
+  ): Promise<number | undefined> {
     return new Promise((resolve, reject) => {
       this.web3.eth.getTransactionReceipt(txHash, (err, transaction) => {
         if (!transaction) {
@@ -57,23 +74,26 @@ export class XyoEthPaymentValidator {
         }
 
         if (transaction.logs.length > 0) {
-
           const sendingTokensToWhom = transaction.logs[0].topics[2] as string
 
-          if (`0x${sendingTokensToWhom.slice(26, 68)}`.toLowerCase() !== toEth.toLowerCase()) {
+          if (
+            `0x${sendingTokensToWhom.slice(26, 68)}`.toLowerCase() !==
+            toEth.toLowerCase()
+          ) {
             reject('Did not send to the right person')
             return
           }
 
-          const xyoSent = this.web3.utils.fromWei(transaction.logs[0].data as string, 'ether')
+          const xyoSent = this.web3.utils.fromWei(
+            transaction.logs[0].data as string,
+            'ether'
+          )
           resolve(parseFloat(xyoSent))
           return
         }
 
         reject('no logs')
-
       })
-
     })
   }
 }

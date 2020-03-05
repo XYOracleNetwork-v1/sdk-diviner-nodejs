@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { XyoQuery } from '../../xyo-query'
 
 export class XyoChainScanEndpoint {
-
   public static query = 'queryFor(query: String): JSON'
   public static queryName = 'queryFor'
   private scanner: XyoQuery

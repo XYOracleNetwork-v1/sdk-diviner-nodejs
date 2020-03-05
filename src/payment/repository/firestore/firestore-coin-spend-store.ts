@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IXyoPaymentStore } from '../../../payment'
 import { firestore } from 'firebase'
 
@@ -10,7 +10,10 @@ export class XyoCoinAuth implements IXyoPaymentStore {
   }
 
   public async getCreditsForKey(key: string): Promise<number | undefined> {
-    const docRef = await this.firestore.collection('coin_users').doc(key).get()
+    const docRef = await this.firestore
+      .collection('coin_users')
+      .doc(key)
+      .get()
 
     if (!docRef.exists) {
       return 0
@@ -26,7 +29,10 @@ export class XyoCoinAuth implements IXyoPaymentStore {
   }
 
   public async incrementSpentForUser(key: string): Promise<void> {
-    const docRef = await this.firestore.collection('coin_users').doc(key).get()
+    const docRef = await this.firestore
+      .collection('coin_users')
+      .doc(key)
+      .get()
 
     if (!docRef.exists) {
       return
@@ -38,21 +44,30 @@ export class XyoCoinAuth implements IXyoPaymentStore {
       return
     }
 
-    await this.firestore.collection('coin_users').doc(key).update({
-      xyoQuerySpent: (data.xyoQuerySpent || 0) + 1.
-    })
+    await this.firestore
+      .collection('coin_users')
+      .doc(key)
+      .update({
+        xyoQuerySpent: (data.xyoQuerySpent || 0) + 1
+      })
   }
 
   public async setCreditsForKey(key: string, credits: number): Promise<void> {
-    const docRef = await this.firestore.collection('coin_users').doc(key).get()
+    const docRef = await this.firestore
+      .collection('coin_users')
+      .doc(key)
+      .get()
 
     if (!docRef.exists) {
       return
     }
 
-    await this.firestore.collection('coin_users').doc(key).update({
-      xyoCollected: credits
-    })
+    await this.firestore
+      .collection('coin_users')
+      .doc(key)
+      .update({
+        xyoCollected: credits
+      })
   }
 
   public spent(creditKey: string): Promise<void> {

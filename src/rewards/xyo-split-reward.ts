@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/interface-name-prefix */
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { IXyoAfterWare, IXyoQuery } from '../query'
 import { XyoBoundWitness, XyoStructure } from '@xyo-network/sdk-core-nodejs'
 import bs58 from 'bs58'
@@ -29,7 +32,6 @@ export class XyoSplitReward implements IXyoAfterWare {
       for (const key of keyset) {
         await this.repository.increment(bs58.encode(key), amountPerKey)
       }
-
     }
   }
 
@@ -45,8 +47,8 @@ export class XyoSplitReward implements IXyoAfterWare {
       }
     }
 
-    return keys.map((keySet) => {
-      return keySet.map((key) => {
+    return keys.map(keySet => {
+      return keySet.map(key => {
         return key.getAll().getContentsCopy()
       })
     })

@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IXyoRewardRepository } from './xyo-split-reward'
 import { RedisClient } from 'redis'
 import { IGetTopRewards } from './xyo-top-rewards-endpoint'
 
-export class XyoRewardRepository implements IXyoRewardRepository, IGetTopRewards {
+export class XyoRewardRepository
+  implements IXyoRewardRepository, IGetTopRewards {
   private client: RedisClient
 
   constructor(endpoint: string) {
@@ -11,22 +14,27 @@ export class XyoRewardRepository implements IXyoRewardRepository, IGetTopRewards
     })
   }
 
-  public getTopRewards(): Promise<{ [key: string]: any; }> {
+  public getTopRewards(): Promise<{ [key: string]: any }> {
     return new Promise((resolve, reject) => {
-      const mapping: {[key: string]: number} = {}
+      const mapping: { [key: string]: number } = {}
 
-      this.client.zrevrange('rewards', 0, 99, 'withscores', (error, results) => {
-        if (results) {
-          for (let i = 0; i < results.length / 2; i++) {
-            const key = results[i * 2]
-            const value = parseFloat(results[(i * 2) + 1])
-            mapping[key] = value
+      this.client.zrevrange(
+        'rewards',
+        0,
+        99,
+        'withscores',
+        (error, results) => {
+          if (results) {
+            for (let i = 0; i < results.length / 2; i++) {
+              const key = results[i * 2]
+              const value = parseFloat(results[i * 2 + 1])
+              mapping[key] = value
+            }
           }
 
+          resolve(mapping)
         }
-
-        resolve(mapping)
-      })
+      )
     })
   }
 

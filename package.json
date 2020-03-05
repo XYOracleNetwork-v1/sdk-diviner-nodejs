@@ -20,12 +20,17 @@
   },
   "scripts": {
     "pretest": "yarn install",
-    "lint": "tslint --config tslint.json --project tsconfig.json",
+    "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "yarn lint",
     "build": "yarn xybuild && yarn copy",
     "copy": "copyfiles -u 1 src/**/*.sql dist/",
     "develop": "ts-node --files src/cli.ts",
     "license": "yarn license-checker --onlyAllow 'MIT;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0;ISC;Unlicense;UNKNOWN;BSD*;CC0-1.0' --excludePackages 'colors@0.6.2'"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true
   },
   "xyoPlugins": [
     "dist/chain/plugin/index.js",
@@ -45,6 +50,8 @@
     "dist/reports/dynanmo/dynanmo-report-repository-plugin.js"
   ],
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.19.2",    
     "@types/ethereumjs-abi": "^0.6.3",
     "@types/ethereumjs-tx": "^1.0.1",
     "@types/graphql": "^14.2.0",
@@ -59,11 +66,14 @@
     "@types/node": "^11.13.7",
     "@types/web3": "^1.0.18",
     "@types/yargs": "^13.0.0",
-    "@xyo-network/config-tslint": "^0.1.12",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
     "copyfiles": "^2.1.0",
     "license-checker": "^25.0.1",
     "ts-node": "^8.1.0",
-    "tslint": "^5.16.0",
     "typescript": "^3.4.5"
   },
   "dependencies": {

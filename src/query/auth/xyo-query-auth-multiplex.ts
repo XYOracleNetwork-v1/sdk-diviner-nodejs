@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IXyoAuth } from '..'
 
 export class XyoMultiplexedQueryAuth implements IXyoAuth {
   public name = 'xyo-multiplex-auth'
-  public authProviders: {[key: string]: IXyoAuth} = {}
+  public authProviders: { [key: string]: IXyoAuth } = {}
   public alwaysAuth: Array<(config: any, price: number) => void> = []
 
-  public async auth(config: any): Promise<{auth: boolean, shouldReward: boolean}> {
+  public async auth(
+    config: any
+  ): Promise<{ auth: boolean; shouldReward: boolean }> {
     const keys = Object.keys(config)
 
     for (const key of keys) {
@@ -39,5 +42,4 @@ export class XyoMultiplexedQueryAuth implements IXyoAuth {
 
     throw new Error('Auth not found')
   }
-
 }
