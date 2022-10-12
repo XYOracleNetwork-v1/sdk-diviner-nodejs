@@ -85,7 +85,7 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.16",
-    "apollo-server": "^2.11.0",
+    "apollo-server": "^2.25.4",
     "aws-sdk": "^2.633.0",
     "bs58": "^4.0.1",
     "eth-sig-util": "2.5.2",
